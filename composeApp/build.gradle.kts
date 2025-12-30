@@ -1,11 +1,12 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -14,7 +15,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,13 +25,14 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation("androidx.credentials:credentials:1.6.0-rc01")
-            implementation("androidx.credentials:credentials-play-services-auth:1.6.0-rc01")
+            val credentialVersion = "1.6.0-rc01"
+            implementation("androidx.credentials:credentials:$credentialVersion")
+            implementation("androidx.credentials:credentials-play-services-auth:$credentialVersion")
             implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
         }
         commonMain.dependencies {
@@ -81,3 +83,23 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+
+private object KeyStoreValues {
+    const val CLIENT_ID_GOOGLE_AUTH = "CLIENT_ID_GOOGLE_AUTH"
+}
+
+buildkonfig {
+    packageName = "com.alwinsden.dino"
+    val secretPropsFile = rootProject.file("secret.properties")
+    val secretProps = Properties()
+    if (secretPropsFile.exists()) {
+        secretProps.load(secretPropsFile.inputStream())
+    }
+    defaultConfigs {
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            KeyStoreValues.CLIENT_ID_GOOGLE_AUTH,
+            secretProps.getProperty(KeyStoreValues.CLIENT_ID_GOOGLE_AUTH)
+        )
+    }
+}
