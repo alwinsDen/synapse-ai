@@ -4,8 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
+import com.alwinsden.dino.utilities.UI.Defaults
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.dino_corner
 import org.jetbrains.compose.resources.painterResource
@@ -30,7 +30,7 @@ expect fun ClickableContinueWithGoogle(nonce: String): Unit
 
 @Composable
 fun ContinueWithGoogle() {
-    var nonce: String = "DEFAULT"
+    var nonce by remember { mutableStateOf(Defaults.default) }
     LaunchedEffect(Unit) {
         //nonce is fetched from the requested server.
         nonce = RequestManager(ClientKtorConfiguration()).createNonce()

@@ -21,7 +21,7 @@ fun ApplicationCall.verifyGoogleToken(mobileGoogleIdToken: String) {
     ).build()
     val idToken: GoogleIdToken = verifier.verify(mobileGoogleIdToken)
     val payload: GoogleIdToken.Payload = idToken.payload
-    println(payload.email)
+    println(payload.nonce)
 }
 
 

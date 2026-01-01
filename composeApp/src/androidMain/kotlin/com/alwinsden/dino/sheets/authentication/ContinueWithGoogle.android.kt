@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.credentials.*
 import androidx.credentials.exceptions.GetCredentialException
 import com.alwinsden.dino.BuildKonfig
+import com.alwinsden.dino.utilities.UI.Defaults
 import com.alwinsden.dino.utilities.UI.DialogLoader
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
@@ -16,7 +17,6 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.android_light_sq_ctn
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 
@@ -79,28 +79,26 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
     )
         .setNonce(nonce)
         .build()
-    LaunchedEffect(Unit) {
+    LaunchedEffect(nonce) {
+        if (nonce == Defaults.default) return@LaunchedEffect
         //auto login flow
         val request: GetCredentialRequest = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
         loaderState = true
-        coroutineScope {
-            try {
-                val result = credentialManager.getCredential(
-                    request = request,
-                    context = context
-                )
-                Log.i(TAG, "Triggered Google Sign in success")
-                handleSignIn(result)
-            } catch (e: GetCredentialException) {
-                Log.e(TAG, "Error getting credential", e)
-            } finally {
-                loaderState = false
-            }
+        try {
+            val result = credentialManager.getCredential(
+                request = request,
+                context = context
+            )
+            Log.i(TAG, "Triggered Google Sign in success")
+            handleSignIn(result)
+        } catch (e: GetCredentialException) {
+            Log.e(TAG, "Error getting credential", e)
+        } finally {
+            loaderState = false
         }
     }
-    DialogLoader(loaderState)
     Image(
         painter = painterResource(
             resource = Res.drawable.android_light_sq_ctn
@@ -126,4 +124,5 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
             }
         }
     )
+    DialogLoader(loaderState)
 }

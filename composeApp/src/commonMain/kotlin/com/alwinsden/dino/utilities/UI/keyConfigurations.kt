@@ -6,3 +6,7 @@ import com.alwinsden.dino.requestManager.IClientInterface
 class ClientKtorConfiguration : IClientInterface {
     override val baseUrl: String = BuildKonfig.KTOR_ENTRY_URL
 }
+
+object Defaults {
+    val default = "DEFAULT"
+}
