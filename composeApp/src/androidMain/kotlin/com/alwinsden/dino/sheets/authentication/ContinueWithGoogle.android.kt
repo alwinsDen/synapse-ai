@@ -57,7 +57,7 @@ fun handleSignIn(credsRequest: GetCredentialResponse) {
 }
 
 @Composable
-actual fun ClickableContinueWithGoogle() {
+actual fun ClickableContinueWithGoogle(nonce: String) {
     val context = LocalContext.current
     val credentialManager = CredentialManager.create(context)
 
@@ -70,14 +70,14 @@ actual fun ClickableContinueWithGoogle() {
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
         .setServerClientId(BuildKonfig.CLIENT_ID_GOOGLE_AUTH)
-        .setNonce("test-nonce")
+        .setNonce(nonce)
         .build()
 
     //this is used for manual click-triggered login
     val signInWithGoogleOption: GetSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(
         serverClientId = BuildKonfig.CLIENT_ID_GOOGLE_AUTH
     )
-        .setNonce("test-nonce")
+        .setNonce(nonce)
         .build()
     LaunchedEffect(Unit) {
         //auto login flow

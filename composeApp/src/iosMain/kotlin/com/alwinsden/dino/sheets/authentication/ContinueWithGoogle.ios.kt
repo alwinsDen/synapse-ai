@@ -18,7 +18,7 @@ actual suspend fun manualTriggerSignIn() {
 }
 
 @Composable
-actual fun ClickableContinueWithGoogle() {
+actual fun ClickableContinueWithGoogle(nonce: String) {
     Image(
         painter = painterResource(
             resource = Res.drawable.android_light_sq_ctn
