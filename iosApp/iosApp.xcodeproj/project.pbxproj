@@ -106,7 +106,6 @@
 				A9A7C909D2FB6EB63B1296DA /* Frameworks */,
 				E19E04235C31716A997C3ED2 /* Resources */,
 				711D2D9F5FF2698BC5CFAE51 /* [CP] Embed Pods Frameworks */,
-				8630A4B7E9CA6FEF7DACA631 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -180,23 +179,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8630A4B7E9CA6FEF7DACA631 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F07A3DFC2443E0F7C8D269D /* Compile Kotlin Framework */ = {

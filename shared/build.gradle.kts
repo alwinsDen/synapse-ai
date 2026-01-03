@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -16,6 +17,20 @@ kotlin {
     iosSimulatorArm64()
 
     jvm()
+
+
+    cocoapods {
+        version = "1.0.0"
+        homepage = "xgamma.in"
+        summary = "Compose module setup for cocoapods"
+        ios.deploymentTarget = "26.0"
+        framework {
+            baseName = "SharedFramework"
+        }
+        pod("GoogleSignIn")
+
+        podfile = project.file("../iosApp/Podfile")
+    }
 
     sourceSets {
         commonMain.dependencies {

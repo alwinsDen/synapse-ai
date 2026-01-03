@@ -9,8 +9,6 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - composeApp (1.0.0):
-    - GoogleSignIn
   - GoogleSignIn (9.0.0):
     - AppAuth (~> 2.0)
     - AppCheckCore (~> 11.0)
@@ -30,9 +28,12 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
   - PromisesObjC (2.4.0)
+  - shared (1.0.0):
+    - GoogleSignIn
 
 DEPENDENCIES:
-  - composeApp (from `../composeApp`)
+  - GoogleSignIn
+  - shared (from `../shared`)
 
 SPEC REPOS:
   trunk:
@@ -45,19 +46,19 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
-  composeApp:
-    :path: "../composeApp"
+  shared:
+    :path: "../shared"
 
 SPEC CHECKSUMS:
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  composeApp: d0f5f0f07a7c977dae11c7a5498cc1c63fa4c7af
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  shared: 0104376350e6aa8c11d96a221f6c48006a101f50
 
-PODFILE CHECKSUM: 53c6c626aed70c066c26854f4de5bdcc8b6d4159
+PODFILE CHECKSUM: c1b47ff1223edb3aa5833f0199e73137eb6b93f6
 
 COCOAPODS: 1.16.2

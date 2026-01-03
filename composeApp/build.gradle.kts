@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import java.util.*
 
 plugins {
@@ -8,7 +7,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.buildKonfig)
-    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -26,21 +24,6 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
-    }
-
-    cocoapods {
-        version = "1.0.0"
-        homepage = "xgamma.in"
-        summary = "Compose module setup for cocoapods"
-        ios.deploymentTarget = "26.0"
-        framework {
-            baseName = "ComposeFramework"
-        }
-        pod("GoogleSignIn")
-
-        podfile = project.file("../iosApp/Podfile")
-        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
 
     sourceSets {
