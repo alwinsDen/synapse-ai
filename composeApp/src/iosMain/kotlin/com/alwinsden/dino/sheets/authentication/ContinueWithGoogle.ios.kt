@@ -25,15 +25,19 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
     val scope = rememberCoroutineScope()
     var loaderState by remember { mutableStateOf((false)) }
     val authenticatorClass = remember { GoogleAuthenticator() }
+    LaunchedEffect(Unit) {
+        loaderState = true
+        val readExistingTokenId = authenticatorClass.checkExisting()
+        println(readExistingTokenId)
+        loaderState = false
+    }
     Image(
         painter = painterResource(
             resource = Res.drawable.android_light_sq_ctn
         ), contentDescription = "Continue with Google",
         modifier = Modifier.clickable {
-            println("Trigger IOS")
             scope.launch {
-                authenticatorClass.login({ loadingState ->
-                    println(loadingState)
+                val googleIdToken = authenticatorClass.login({ loadingState ->
                     loaderState = loadingState
                 })
             }

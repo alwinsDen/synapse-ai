@@ -24,10 +24,28 @@ class GoogleAuthenticator {
                     val profile = gidSignInResult?.user?.profile
                     if (idToken != null) {
                         println(idToken.tokenString)
+                        continuation.resume(idToken.tokenString)
                     } else {
                         continuation.resume(null)
                     }
                     controlLoadingState(false)
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    suspend fun checkExisting() = suspendCoroutine<String?> { continuation ->
+        GIDSignIn.sharedInstance.restorePreviousSignInWithCompletion { user, nsError ->
+            if (nsError != null || user == null) {
+                continuation.resume(null)
+            } else {
+                val userIdToken = user?.idToken?.tokenString
+                if (userIdToken !== null) {
+                    continuation.resume(userIdToken)
+                    println("auto-collected token id")
+                } else {
+                    continuation.resume(null)
                 }
             }
         }
