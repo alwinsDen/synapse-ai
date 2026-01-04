@@ -23,8 +23,8 @@ actual suspend fun manualTriggerSignIn() {
 @Composable
 actual fun ClickableContinueWithGoogle(nonce: String) {
     val scope = rememberCoroutineScope()
-    val authenticatorClass = remember { GoogleAuthenticator() }
     var loaderState by remember { mutableStateOf((false)) }
+    val authenticatorClass = remember { GoogleAuthenticator() }
     Image(
         painter = painterResource(
             resource = Res.drawable.android_light_sq_ctn
@@ -32,7 +32,10 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
         modifier = Modifier.clickable {
             println("Trigger IOS")
             scope.launch {
-                authenticatorClass.login()
+                authenticatorClass.login({ loadingState ->
+                    println(loadingState)
+                    loaderState = loadingState
+                })
             }
         }
     )

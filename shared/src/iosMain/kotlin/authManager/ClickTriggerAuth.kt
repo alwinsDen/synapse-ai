@@ -8,15 +8,17 @@ import kotlin.coroutines.suspendCoroutine
 
 class GoogleAuthenticator {
     @OptIn(ExperimentalForeignApi::class)
-    suspend fun login() = suspendCoroutine<String?> { continuation ->
+    suspend fun login(controlLoadingState: (Boolean) -> Unit) = suspendCoroutine<String?> { continuation ->
         val rootUiView = UIApplication.sharedApplication
             .keyWindow?.rootViewController
         if (rootUiView == null) {
             continuation.resume(null)
         } else {
+            controlLoadingState(true)
             GIDSignIn.sharedInstance.signInWithPresentingViewController(rootUiView) { gidSignInResult, nsError ->
                 if (nsError != null) {
-
+                    controlLoadingState(false)
+                    continuation.resume(null)
                 } else {
                     val idToken = gidSignInResult?.user?.idToken
                     val profile = gidSignInResult?.user?.profile
@@ -25,6 +27,7 @@ class GoogleAuthenticator {
                     } else {
                         continuation.resume(null)
                     }
+                    controlLoadingState(false)
                 }
             }
         }
