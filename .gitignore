@@ -23,3 +23,4 @@ iosApp/Pods
 *.xcuserstate
 xcuserdata/
 *.podspec
+iosApp/Configuration/Google.xcconfig
