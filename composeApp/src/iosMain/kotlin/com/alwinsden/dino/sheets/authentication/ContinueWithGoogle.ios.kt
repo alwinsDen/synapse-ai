@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import authManager.GoogleAuthenticator
+import authManager.IOSAuthentication
 import com.alwinsden.dino.utilities.UI.DialogLoader
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.android_light_sq_ctn
@@ -57,12 +58,17 @@ actual fun ClickableContinueWithGoogle(nonce: String) {
 
 @Composable
 actual fun ClickableContinueWithApple(nonce: String) {
+    var authenticationClass = remember { IOSAuthentication() }
+    var scope = rememberCoroutineScope()
     Image(
         painter = painterResource(resource = Res.drawable.appleid_sign_in_button),
         contentDescription = "",
         modifier = Modifier.fillMaxWidth(.5f)
             .clickable {
                 println("Initiate iOS login.")
+                scope.launch {
+                    authenticationClass.triggerLoginAtRequest()
+                }
             }
     )
 }
