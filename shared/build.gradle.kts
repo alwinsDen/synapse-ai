@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinCocoapods)
+    kotlin("plugin.serialization").version("2.3.0")
 }
 
 kotlin {
@@ -34,8 +35,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // put your Multiplatform dependencies here
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)

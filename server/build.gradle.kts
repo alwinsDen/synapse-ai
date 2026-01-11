@@ -7,7 +7,7 @@ plugins {
 group = "com.alwinsden.dino"
 version = "1.0.0"
 application {
-    mainClass.set("com.alwinsden.dino.ApplicationKt")
+    mainClass.set("com.alwinsden.dino.KtorStartKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -28,4 +28,6 @@ dependencies {
     })
     implementation(libs.netty.codec.protobuf)
     implementation(libs.ktor.statusPages)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 }
