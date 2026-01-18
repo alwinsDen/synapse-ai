@@ -1,14 +1,45 @@
 package com.alwinsden.dino.utilities.UI
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import dino.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 
+
 /*
-EBGaramond Font
+* define data classes
+* */
+data class IncomingFontStylesDataClass(
+    val fontSize: TextUnit? = null,
+    val fontWeight: FontWeight? = null,
+    val fontStyle: FontStyle? = null,
+    val colorInt: Long? = null,
+)
+
+/*
+* define font styles
+* */
+
+@Composable
+fun defaultFontStyle(incomingStyles: IncomingFontStylesDataClass): TextStyle {
+    return TextStyle(
+        fontFamily = FontLibrary.ebGaramond(),
+        fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,
+        fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
+        fontSize = incomingStyles.fontSize ?: 18.sp,
+        color = Color(incomingStyles.colorInt ?: 0xff000000)
+    )
+}
+
+
+/*
+EBGaramond Font6
 */
 object FontLibrary {
     @Composable

@@ -16,7 +16,8 @@ import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
 import com.alwinsden.dino.utilities.UI.Defaults
-import com.alwinsden.dino.utilities.UI.FontLibrary
+import com.alwinsden.dino.utilities.UI.IncomingFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.dino_corner
 import org.jetbrains.compose.resources.painterResource
@@ -43,23 +44,31 @@ fun ContinueWithGoogle() {
         modifier = Modifier
             .background(Color(0xff23D76E))
             .statusBarsPadding()
+            .navigationBarsPadding()
             .fillMaxSize(),
     ) {
         Box(Modifier.align(Alignment.Center)) {
             Column {
                 Text(
                     "Project Dino*",
-                    fontSize = 35.sp,
                     color = Color.White,
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontLibrary.ebGaramond()
+                    style = defaultFontStyle(
+                        incomingStyles = IncomingFontStylesDataClass(
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.Normal,
+                        )
+                    )
                 )
-                Spacer(Modifier.height(5.dp))
+                Spacer(Modifier.height(2.dp))
                 Column {
                     Text(
                         "continue with",
                         color = Color.White,
-                        fontSize = 12.sp
+                        style = defaultFontStyle(
+                            IncomingFontStylesDataClass(
+                                fontSize = 18.sp
+                            )
+                        )
                     )
                     Spacer(modifier = Modifier.height(3.dp))
                     ClickableContinueWithGoogle(nonce)

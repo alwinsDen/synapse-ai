@@ -10,3 +10,9 @@ class ClientKtorConfiguration : IClientInterface {
 object Defaults {
     val default = "DEFAULT"
 }
+
+object PageDefaults {
+    //BotTextField
+    val botTextDefault = "INIT"
+    val botTextExtend = "EXTEND"
+}
