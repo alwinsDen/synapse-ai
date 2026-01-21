@@ -26,6 +26,7 @@ import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.PageDefaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.listModelDefinitions
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -111,14 +112,19 @@ fun BotTextField(mode: String? = null) {
                     contentColor = Color.Black
                 )
             ) {
-                Text(defaultModelSelection.value.lowercase())
+                Text(
+                    defaultModelSelection.value.lowercase(), style = defaultFontStyle(
+                        DefaultFontStylesDataClass()
+                    )
+                )
             }
         }
         if (controlBottomSheetStatus.value) {
             ModalBottomSheet(
                 onDismissRequest = {
                     routineScope.launch {
-                        sheetState.hide()
+                        if (sheetState.isVisible)
+                            sheetState.hide()
                     }.invokeOnCompletion { controlBottomSheetStatus.value = false }
                 },
                 sheetState = sheetState
@@ -133,6 +139,7 @@ fun BotTextField(mode: String? = null) {
                             onClick = { incomingNewType ->
                                 defaultModelSelection.value = incomingNewType
                                 routineScope.launch {
+                                    delay(200)
                                     sheetState.hide()
                                 }.invokeOnCompletion {
                                     controlBottomSheetStatus.value = false
