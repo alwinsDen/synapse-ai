@@ -29,6 +29,29 @@ import com.alwinsden.dino.utilities.UI.listModelDefinitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * A composable text input field for interacting with AI bot models.
+ *
+ * Displays a multi-line text field with the following features:
+ * - Image attachment button (placeholder, currently no-op)
+ * - Expandable text input area with scrolling support (max height: 200dp)
+ * - Send button that changes color based on input state
+ * - AI model selection button that opens a bottom sheet modal
+ *
+ * The text field includes:
+ * - Placeholder text: "ask Dino, anything ✨"
+ * - Gray background (0xffF2F2F2) with rounded corners (10dp)
+ * - Dynamic send button color: gray when empty, green (0xff23D76E) when text is present
+ *
+ * The model selection bottom sheet allows users to choose between different AI models
+ * defined in [ModelDefinitions], with the default selection being Gemini.
+ *
+ * @param mode Optional display mode filter. When null or matching [PageDefaults.botTextDefault],
+ *             the text field is rendered. Other modes result in no UI being displayed.
+ *
+ * @see ModelDefinitions for available AI model options
+ * @see PageDefaults for mode configuration
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun BotTextField(mode: String? = null) {

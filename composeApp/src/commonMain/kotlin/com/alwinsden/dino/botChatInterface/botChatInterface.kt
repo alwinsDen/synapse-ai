@@ -28,6 +28,44 @@ import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 
+/**
+ * The main chat interface screen for conversing with AI bot models.
+ *
+ * This composable creates a full-screen chat interface with three main sections:
+ *
+ * ## Layout Structure
+ *
+ * ### Top Bar (Fixed)
+ * - Settings button (left)
+ * - Date display showing "17th January 2026" (center-left)
+ * - Logout button with power icon (right)
+ * - History button (right)
+ * - Background: Light gray (0xfffafafa)
+ *
+ * ### Chat Content (Scrollable)
+ * - Vertically scrollable column containing alternating message bubbles
+ * - [UserCreatedField] components for user messages
+ * - [AiUpdatedField] components for AI responses
+ * - Message width constrained to 70% of screen width for readability
+ * - Disclaimer text at bottom: "Verify the output generated." (gray, small font)
+ * - Extra bottom padding (120dp) to prevent content from being hidden behind input field
+ *
+ * ### Bottom Input Area (Fixed)
+ * - [BotTextField] component for user input
+ * - Elevated appearance with drop shadow (color: 0xff98D6B2, radius: 5dp, spread: 5dp)
+ * - Rounded top corners (20dp radius)
+ * - White background (0xffffffff)
+ * - Handles navigation bar padding automatically
+ *
+ * ## Accessibility
+ * - Properly handles status bar and navigation bar padding on different devices
+ * - Icon buttons include content descriptions for screen readers
+ * - Scrollable content ensures all messages are accessible
+ *
+ * @see BotTextField for the input field component
+ * @see UserCreatedField for user message bubble styling
+ * @see AiUpdatedField for AI response bubble styling
+ */
 @Composable
 fun BotChatInterface() {
     val verticalScrollState = rememberScrollState()
