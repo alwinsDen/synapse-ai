@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Claude-Specific Rules
+
+### Commit and Documentation Policy
+- **IMPORTANT**: Whenever you make a commit that affects or adds any new architectural changes, you MUST update the README.md file to reflect those changes.
+- Keep README.md synchronized with architectural decisions, new features, and significant structural changes.
+- README.md is user-facing documentation; CLAUDE.md is for Claude Code instructions only.
+
 ## Project Overview
 
 Project Dino is a Kotlin Multiplatform project with three modules:

@@ -1,226 +1,253 @@
-# alwinsDen/Claude
+# Project Synapse
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android & iOS) with a Ktor backend.
 
-## Project Overview
+**Author**: [Alwin's Den](https://alwinsden.com)
 
-Project Dino is a Kotlin Multiplatform project with three modules:
-- **composeApp**: Cross-platform UI (Android/iOS) using Compose Multiplatform
-- **shared**: Platform-agnostic business logic and HTTP client
-- **server**: Ktor-based backend for authentication and API services
+## Overview
 
-## Build Commands
+Project Synapse is a modern multiplatform chat application that enables users to interact with various AI models. Built with Kotlin Multiplatform, it shares business logic across Android and iOS while maintaining native platform experiences.
 
-### Android
-Build debug APK:
-```bash
-./gradlew :composeApp:assembleDebug
+## Features
+
+- 🤖 **Multi-Model Support**: Interact with different AI models (Gemini, and more)
+- 📱 **Cross-Platform**: Single codebase for Android and iOS using Compose Multiplatform
+- 🔐 **Secure Authentication**: Google Sign-In with nonce-based security
+- 💬 **Rich Chat Interface**: Clean, Material 3 design with smooth interactions
+- ⚡ **Fast Backend**: Ktor-powered server with Valkey caching
+- 🔄 **Real-time Sync**: Efficient HTTP-based communication
+
+## Technology Stack
+
+### Frontend
+- **Kotlin Multiplatform**: Shared code across platforms
+- **Compose Multiplatform (v1.9.3)**: Declarative UI framework
+- **Material 3**: Modern design components
+- **Ktor Client (v3.3.3)**: HTTP communication
+
+### Backend
+- **Ktor Server (v3.3.3)**: Lightweight, asynchronous server
+- **Valkey/Glide (v2.2.5)**: Redis-compatible caching for sessions
+- **Google Sign-In API**: OAuth 2.0 authentication
+
+### Build Tools
+- **Gradle**: Multi-module build system
+- **BuildKonfig**: Build-time configuration management
+- **CocoaPods**: iOS dependency management
+
+## Prerequisites
+
+- **JDK 11** or higher
+- **Android Studio** (for Android development)
+- **Xcode 14+** (for iOS development, macOS only)
+- **CocoaPods** (for iOS dependencies)
+- **Valkey/Redis** server (for backend caching)
+
+## Project Structure
+
+```
+Project-Synapse/
+├── composeApp/          # Cross-platform UI (Android/iOS)
+│   ├── androidMain/     # Android-specific code
+│   ├── iosMain/         # iOS-specific code
+│   └── commonMain/      # Shared UI code
+├── shared/              # Business logic & HTTP client
+│   ├── androidMain/     # Android platform implementations
+│   ├── iosMain/         # iOS platform implementations
+│   └── commonMain/      # Shared business logic
+├── server/              # Ktor backend
+└── iosApp/              # iOS app wrapper
 ```
 
-Run app (use IDE run configuration or install APK to device/emulator)
+## Getting Started
 
-### iOS
-Build and sync iOS framework:
+### 1. Clone the Repository
+
 ```bash
-./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
+git clone git@github.com:alwinsDen/Project-Synapse.git
+cd Project-Synapse
 ```
 
-Open `iosApp/iosApp.xcodeproj` in Xcode and run from there.
+### 2. Configure Secrets
 
-Note: The build automatically triggers `XCodeBuildKonfigGenerator` task which generates `iosApp/Configuration/Google.xcconfig` from `secret.properties`.
+Copy `refer.secret.properties` to `secret.properties` and fill in your credentials:
 
-### Server
-Run Ktor server:
+```bash
+cp refer.secret.properties secret.properties
+# Edit secret.properties with your API keys
+```
+
+Required keys:
+- `CLIENT_ID_GOOGLE_AUTH`: Google OAuth client ID
+- `KTOR_ENTRY_URL`: Backend server URL
+- `IOS_CLIENT_ID`: iOS-specific Google client ID
+- `IOS_REVERSE_CLIENT_ID`: iOS URL scheme
+
+### 3. Start the Backend Server
+
 ```bash
 ./gradlew :server:run
 ```
 
-Server starts on `http://127.0.0.1:5432` by default (configurable in `server/src/main/resources/application.conf`).
+Server starts on `http://127.0.0.1:5432` by default.
 
-### Tests
-Run all tests:
+### 4. Build Mobile Apps
+
+**Android:**
 ```bash
-./gradlew test
+./gradlew :composeApp:assembleDebug
 ```
 
-Run specific module tests:
+**iOS:**
 ```bash
+cd iosApp && pod install && cd ..
+./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
+# Open iosApp/iosApp.xcodeproj in Xcode and run
+```
+
+## Build Commands
+
+### Development Builds
+
+| Platform | Command |
+|----------|---------|
+| Android APK | `./gradlew :composeApp:assembleDebug` |
+| iOS Framework | `./gradlew :composeApp:embedAndSignAppleFrameworkForXcode` |
+| Server | `./gradlew :server:run` |
+
+### Testing
+
+```bash
+# Run all tests
+./gradlew test
+
+# Module-specific tests
 ./gradlew :composeApp:test
-./gradlew :server:test
 ./gradlew :shared:test
+./gradlew :server:test
 ```
 
 ### Clean Build
+
 ```bash
-./gradlew clean
-./gradlew build
+./gradlew clean build
 ```
 
 ## Architecture
 
 ### Module Interaction Flow
+
 ```
-composeApp (UI Layer)
-    ↓ calls shared APIs
-shared (Business Logic & HTTP Client)
-    ↓ makes HTTP requests
-server (Ktor Backend) ↔ Valkey (Cache/Session Store)
+┌─────────────────┐
+│   composeApp    │  UI Layer (Compose Multiplatform)
+│  (Android/iOS)  │
+└────────┬────────┘
+         │ calls shared APIs
+         ▼
+┌─────────────────┐
+│     shared      │  Business Logic & HTTP Client
+└────────┬────────┘
+         │ HTTP requests
+         ▼
+┌─────────────────┐     ┌─────────────┐
+│   server        │◄───►│   Valkey    │
+│  (Ktor Backend) │     │   (Cache)   │
+└─────────────────┘     └─────────────┘
 ```
 
-### Navigation System
-- Uses `androidx.navigation.compose` with type-safe serialization
-- Three main routes defined in `composeApp/src/commonMain/kotlin/com/alwinsden/dino/navigation/routeSerializers.kt`:
-  - `LoginWindow`: Authentication screen
-  - `BotWindow`: AI model selection
-  - `BotChatWindow`: Chat interface
-- All navigation managed through `NavigationController` singleton in `navHostClass.kt`
+### Key Components
 
-### Authentication Architecture
-The app uses Google Sign-In with nonce-based security:
+**Navigation System**
+- Type-safe navigation using `androidx.navigation.compose`
+- Three main routes: `LoginWindow`, `BotWindow`, `BotChatWindow`
+- Centralized navigation through `NavigationController` singleton
 
-1. **Nonce Generation**: Client requests nonce from server → stored in Valkey with 60s TTL
-2. **Platform Sign-In**:
-   - Android: Uses `androidx.credentials` API with Google ID integration
-   - iOS: Uses CocoaPods GoogleSignIn SDK (wrapped in `GoogleAuthenticator`)
-3. **Token Verification**: Server validates Google ID token and checks nonce in Valkey cache
-4. **JWT Generation**: TODO - currently returns success after validation
+**Authentication Flow**
+1. Client requests nonce from server
+2. Server generates UUID and stores in Valkey (60s TTL)
+3. User signs in with Google (platform-specific implementation)
+4. Server validates Google ID token and verifies nonce
+5. JWT token generation (coming soon)
 
-Key files:
-- `composeApp/src/commonMain/kotlin/com/alwinsden/dino/sheets/authentication/ContinueWithGoogle.kt` (expect)
-- `composeApp/src/androidMain/kotlin/...ContinueWithGoogle.android.kt` (actual)
-- `composeApp/src/iosMain/kotlin/...ContinueWithGoogle.ios.kt` (actual)
-- `server/src/main/kotlin/com/alwinsden/dino/googleAuthn/serverManager/serverManager.kt`
-
-### HTTP Request Management
-Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`:
-- `RequestManager`: Wraps Ktor HttpClient with platform-specific base URLs
-- `IClientInterface`: Abstraction for platform-specific configuration
-- Extension functions for endpoints: `healthCheck()`, `createNonce()`
-- Platform-specific engines:
-  - Android: OkHttp (`shared/src/androidMain`)
-  - iOS: Darwin/URLSession (`shared/src/iosMain`)
-
-### Error Handling
-- Custom `CustomInAppException` hierarchy in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/utils/`
-- Server uses Ktor `StatusPages` plugin to map exceptions to HTTP responses
-- Serialized errors via `ErrorObjectCustom` for consistent client-side handling
-
-### Configuration Management
-
-**Build-time secrets** (via BuildKonfig plugin):
-- Reads from `secret.properties` (git-ignored, use `refer.secret.properties` as template)
-- Generates `BuildKonfig` object with platform-specific values:
-  - `CLIENT_ID_GOOGLE_AUTH`
-  - `KTOR_ENTRY_URL` (different for Android/iOS)
-  - `IOS_CLIENT_ID`, `IOS_REVERSE_CLIENT_ID`
-- For iOS: Auto-generates `iosApp/Configuration/Google.xcconfig` during build
-
-**Runtime configuration**:
-- Server: `server/src/main/resources/application.conf` for Ktor settings, Valkey connection, Google audience
-
-## Key Technology Choices
-
-### Compose Multiplatform (v1.9.3)
-- Shared UI code between Android and iOS
-- Material 3 design components
-- Platform-specific implementations use `expect`/`actual` keywords
-
-### Ktor (v3.3.3)
-- **Client**: Multiplatform HTTP client with OkHttp (Android) and Darwin (iOS) engines
-- **Server**: Netty-based backend with ContentNegotiation and StatusPages plugins
-
-### Valkey/Glide (v2.2.5)
-- Redis-compatible cache for session/nonce storage
-- Server-side only (JVM target)
-- **Important**: The dependency uses platform-specific classifiers. Current setup uses `osx-aarch_64`. Change classifier in `server/build.gradle.kts` when building for other platforms.
-
-### CocoaPods Integration
-- iOS native dependencies managed via `shared/build.gradle.kts` cocoapods block
-- Currently integrates GoogleSignIn pod
-- Podfile location: `iosApp/Podfile`
-
-## Platform-Specific Considerations
-
-### Android
-- Target SDK 36, Min SDK 24
-- Modern Credentials API for authentication (not legacy GoogleSignIn)
-- JVM 11 compilation target
-
-### iOS
-- Deployment target: iOS 26.0
-- Compose compiles to Swift-compatible framework (`SharedFramework`)
-- SwiftUI wrapper bridges Kotlin Compose UI
-- Native authentication via CocoaPods GoogleSignIn
-
-### Server (JVM)
-- Main class: `com.alwinsden.dino.KtorStartKt` in `server/src/main/kotlin/com/alwinsden/dino/KtorStart.kt`
-- Lazy Valkey initialization on startup
-- Endpoints:
-  - `GET /health`: Health check
-  - `GET /generate-nonce`: UUID generation with Valkey caching
-  - `POST /login`: Google token verification
+**HTTP Request Management**
+- `RequestManager` wraps Ktor HttpClient
+- Platform-specific engines: OkHttp (Android), Darwin (iOS)
+- Extension functions for type-safe API calls
 
 ## Development Workflow
 
 ### Adding New Screens
-1. Define serializable route in `navigation/routeSerializers.kt`
-2. Add composable screen in `composeApp/src/commonMain/kotlin/`
-3. Register route in `NavigationController` (navHostClass.kt)
+
+1. Define route in `navigation/routeSerializers.kt`
+2. Create composable in `composeApp/src/commonMain/kotlin/`
+3. Register in `NavigationController`
 
 ### Adding Server Endpoints
+
 1. Define route in `server/src/main/kotlin/com/alwinsden/dino/KtorStart.kt`
-2. Add corresponding extension function in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/get/`
-3. Use `RequestManager` instance from client to call endpoint
+2. Add extension function in `shared/.../requestManager/`
+3. Call from client using `RequestManager`
 
 ### Platform-Specific Code
-1. Declare `expect` function/class in `commonMain`
-2. Provide `actual` implementation in `androidMain`, `iosMain`, or `jvmMain`
-3. Example: See `ContinueWithGoogle.kt` authentication implementations
 
-### Managing Secrets
-- Never commit `secret.properties` to git
-- Use `refer.secret.properties` as a template for required keys
-- iOS builds require `XCodeBuildKonfigGenerator` task to sync secrets to Xcode
-- Server reads secrets from environment or config files
+Use `expect`/`actual` pattern:
+```kotlin
+// commonMain
+expect fun platformSpecificFunction(): String
 
-## Multiplatform Best Practices
+// androidMain
+actual fun platformSpecificFunction() = "Android"
 
-### Code Sharing Strategy
-- Business logic and data models → `commonMain`
-- Platform-specific UI behavior → platform-specific `Main` folders
-- Server-specific code → `jvmMain` (in `shared` module) or `server` module
-- Prefer `expect`/`actual` over conditional compilation
-
-### Dependency Management
-- Common dependencies in `commonMain.dependencies`
-- Platform-specific dependencies in `androidMain.dependencies`, `iosMain.dependencies`, etc.
-- Use version catalogs (`gradle/libs.versions.toml`) for version management
-
-### Testing Strategy
-- Unit tests in `commonTest` for shared business logic
-- Platform-specific tests in `androidTest`, `iosTest`, `jvmTest`
-- Server integration tests use Ktor's `testApplication` in `server/src/test/`
+// iosMain
+actual fun platformSpecificFunction() = "iOS"
+```
 
 ## Common Issues
 
 ### iOS Build Failures
-- Ensure `pod install` has been run in `iosApp/` directory
-- Check that `XCodeBuildKonfigGenerator` task completed successfully
-- Verify `secret.properties` contains all iOS-specific keys
+- Run `pod install` in `iosApp/` directory
+- Verify `secret.properties` contains all iOS keys
+- Check Xcode signing configuration
 
 ### Server Connection Issues
-- Android emulator: Use `10.0.2.2` instead of `localhost` for host machine access
-- iOS simulator: Use `localhost` or `127.0.0.1` directly
-- Ensure server is running before testing authentication flows
+- **Android Emulator**: Use `10.0.2.2` instead of `localhost`
+- **iOS Simulator**: Use `localhost` or `127.0.0.1`
+- Ensure server is running before testing
 
-### Valkey/Glide Platform Compatibility
-- Current configuration uses macOS ARM64 classifier
-- For other platforms, update the classifier in `server/build.gradle.kts`:
-  - Linux x64: `linux-x86_64`
-  - Windows x64: `windows-x86_64`
-- See Valkey Glide documentation for full platform support
+### Valkey Platform Compatibility
+Current config uses macOS ARM64. For other platforms, update `server/build.gradle.kts`:
+- Linux x64: `linux-x86_64`
+- Windows x64: `windows-x86_64`
 
-### Authentication Nonce Expiration
-- Nonces expire after 60 seconds in Valkey cache
-- If sign-in takes too long, request a new nonce
-- One-time use: Nonce cleared from cache after first validation attempt
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Commit Convention
+
+Follow conventional commits:
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `refactor:` Code refactoring
+- `test:` Test additions/changes
+
+## License
+
+This project is currently private. Please contact the author for licensing information.
+
+## Contact
+
+**Alwin's Den**
+- Website: [alwinsden.com](https://alwinsden.com)
+- GitHub: [@alwinsDen](https://github.com/alwinsDen)
+
+---
+
+Built with ❤️ using Kotlin Multiplatform
