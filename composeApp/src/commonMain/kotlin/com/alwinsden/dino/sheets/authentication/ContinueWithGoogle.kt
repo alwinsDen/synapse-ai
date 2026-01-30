@@ -19,15 +19,11 @@ import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.btn_android_id_rec
+import dino.composeapp.generated.resources.btn_apple_id_rec
 import dino.composeapp.generated.resources.ic_dino_corner_sq
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-//automated Credential Manager
-@Composable
-expect fun TriggerAutoSignIn()
-expect suspend fun manualTriggerSignIn()
 
 /**
  * Composable that displays a clickable Google sign-in button.
@@ -77,7 +73,23 @@ fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (Str
 }
 
 @Composable
-expect fun ClickableContinueWithApple(nonce: String): Unit
+fun ClickableContinueWithApple(nonce: String) {
+    val scope = rememberCoroutineScope()
+    val appleAuthProvider = rememberAppleAuthProvider()
+    if (!appleAuthProvider.showAppleAuth()) {
+        return
+    }
+    Image(
+        painter = painterResource(resource = Res.drawable.btn_apple_id_rec),
+        contentDescription = "",
+        modifier = Modifier.fillMaxWidth(.5f)
+            .clickable {
+                scope.launch {
+                    appleAuthProvider.signIn(nonce)
+                }
+            }
+    )
+}
 
 @Preview
 @Composable
