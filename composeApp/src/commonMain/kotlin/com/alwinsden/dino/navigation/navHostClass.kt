@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.alwinsden.dino.botChatInterface.BotChatInterface
 import com.alwinsden.dino.botInterface.BotInterface
-import com.alwinsden.dino.sheets.authentication.ContinueWithGoogle
+import com.alwinsden.dino.startup.UserStartupPage
 
 object NavigationController {
 
@@ -15,7 +15,7 @@ object NavigationController {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = LoginWindow) {
             composable<LoginWindow> {
-                ContinueWithGoogle()
+                UserStartupPage()
             }
             composable<BotWindow> {
                 BotInterface()
