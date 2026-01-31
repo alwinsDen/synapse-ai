@@ -10,12 +10,12 @@ Project Synapse is a modern multiplatform chat application that enables users to
 
 ## Features
 
-- 🤖 **Multi-Model Support**: Interact with different AI models (Gemini, and more)
-- 📱 **Cross-Platform**: Single codebase for Android and iOS using Compose Multiplatform
-- 🔐 **Secure Authentication**: Google Sign-In with nonce-based security
-- 💬 **Rich Chat Interface**: Clean, Material 3 design with smooth interactions
-- ⚡ **Fast Backend**: Ktor-powered server with Valkey caching
-- 🔄 **Real-time Sync**: Efficient HTTP-based communication
+- **Multi-Model Support**: Interact with different AI models (Gemini, and more)
+- **Cross-Platform**: Single codebase for Android and iOS using Compose Multiplatform
+- **Secure Authentication**: Google Sign-In with nonce-based security
+- **Rich Chat Interface**: Clean, Material 3 design with smooth interactions
+- **Fast Backend**: Ktor-powered server with Valkey caching
+- **Real-time Sync**: Efficient HTTP-based communication
 
 ## Technology Stack
 
@@ -28,6 +28,8 @@ Project Synapse is a modern multiplatform chat application that enables users to
 ### Backend
 - **Ktor Server (v3.3.3)**: Lightweight, asynchronous server
 - **Valkey/Glide (v2.2.5)**: Redis-compatible caching for sessions
+- **Exposed (v1.0.0)**: Kotlin SQL framework for database access.
+- **H2 (v2.4.240)**: In-memory SQL database.
 - **Google Sign-In API**: OAuth 2.0 authentication
 
 ### Build Tools
@@ -152,7 +154,14 @@ cd iosApp && pod install && cd ..
 ┌─────────────────┐     ┌─────────────┐
 │   server        │◄───►│   Valkey    │
 │  (Ktor Backend) │     │   (Cache)   │
-└─────────────────┘     └─────────────┘
+└───────┬─────────┘     └─────────────┘
+        │
+        │ SQL
+        ▼
+┌─────────────────┐
+│   H2/Postgres   │
+│   (Database)    │
+└─────────────────┘
 ```
 
 ### Key Components
@@ -173,6 +182,11 @@ cd iosApp && pod install && cd ..
 - `RequestManager` wraps Ktor HttpClient
 - Platform-specific engines: OkHttp (Android), Darwin (iOS)
 - Extension functions for type-safe API calls
+
+**Database**
+- **Exposed**: Kotlin-idiomatic SQL framework for database interactions.
+- **H2**: Used as an in-memory database for development and testing.
+- The server uses the database for persisting chat history and user data.
 
 ## Development Workflow
 
@@ -250,4 +264,4 @@ This project is currently private. Please contact the author for licensing infor
 
 ---
 
-Built with ❤️ using Kotlin Multiplatform
+Built with using Kotlin Multiplatform
