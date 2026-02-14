@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.botInterface.components.InitializedUiState
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.PageDefaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -39,7 +40,10 @@ fun BotInterface(mode: String? = null) {
             Text(
                 text = "*images can be uploaded, but are not analysed.",
                 style = defaultFontStyle(
-                    DefaultFontStylesDataClass()
+                    DefaultFontStylesDataClass(
+                        fontFamily = FontLibrary.inter(),
+                        reduceFromDefault = 2
+                    )
                 ),
                 modifier = Modifier.align(Alignment.BottomCenter)
             )

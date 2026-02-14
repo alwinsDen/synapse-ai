@@ -49,6 +49,7 @@ fun UserCreatedField(maxWidth: Dp) {
                     )
                 ), modifier = Modifier.padding(end = 15.dp)
             )
+            Spacer(Modifier.height(15.dp))
         }
     }
 }

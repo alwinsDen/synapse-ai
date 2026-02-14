@@ -15,8 +15,10 @@ import org.jetbrains.compose.resources.Font
 /*
 * define data classes
 * */
+
 data class DefaultFontStylesDataClass(
     val fontSize: TextUnit? = null,
+    val fontFamily: FontFamily? = null,
     val fontWeight: FontWeight? = null,
     val fontStyle: FontStyle? = null,
     val colorInt: Long? = null,
@@ -30,10 +32,10 @@ data class DefaultFontStylesDataClass(
 @Composable
 fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
     return TextStyle(
-        fontFamily = FontLibrary.ebGaramond(),
+        fontFamily = incomingStyles.fontFamily ?: FontLibrary.inter(),
         fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,
         fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
-        fontSize = incomingStyles.fontSize ?: (18 - (incomingStyles.reduceFromDefault ?: 0)).sp,
+        fontSize = incomingStyles.fontSize ?: (16 - (incomingStyles.reduceFromDefault ?: 0)).sp,
         color = Color(incomingStyles.colorInt ?: 0xff000000),
     )
 }
@@ -66,6 +68,37 @@ object FontLibrary {
                 FontWeight.Normal,
                 FontStyle.Italic
             )
+        )
+    }
+
+    @Composable
+    fun inter(): FontFamily {
+        return FontFamily(
+            Font(
+                resource = Res.font.inter_18pt_regular,
+                FontWeight.Normal
+            ),
+            Font(
+                resource = Res.font.inter_18pt_medium,
+                FontWeight.Medium
+            ),
+            Font(
+                resource = Res.font.inter_18pt_italic,
+                FontWeight.Normal,
+                style = FontStyle.Italic,
+            ),
+            Font(
+                resource = Res.font.inter_18pt_thin,
+                FontWeight.Thin,
+            ),
+            Font(
+                resource = Res.font.inter_18pt_semibold,
+                FontWeight.SemiBold,
+            ),
+            Font(
+                resource = Res.font.inter_18pt_bold,
+                FontWeight.Bold,
+            ),
         )
     }
 }

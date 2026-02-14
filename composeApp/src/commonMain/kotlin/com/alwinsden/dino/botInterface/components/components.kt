@@ -33,7 +33,7 @@ fun InitializedUiState() {
                 ) {
                     append(" synapse ")
                 }
-                withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                withStyle(SpanStyle(fontFamily = FontLibrary.inter())) {
                     append("AI")
                 }
             }, fontSize = 60.sp, textAlign = TextAlign.Center, lineHeight = 60.sp
@@ -77,7 +77,7 @@ fun ModelSelectionRadioMenu(
             Text(
                 text = state.description, style = defaultFontStyle(
                     DefaultFontStylesDataClass(
-                        reduceFromDefault = 5
+                        reduceFromDefault = 4
                     )
                 )
             )

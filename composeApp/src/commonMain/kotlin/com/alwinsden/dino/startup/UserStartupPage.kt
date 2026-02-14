@@ -18,10 +18,7 @@ import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.sheets.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.sheets.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.sheets.authentication.handleReceivedGoogleTokenId
-import com.alwinsden.dino.utilities.UI.ClientKtorConfiguration
-import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
-import com.alwinsden.dino.utilities.UI.Defaults
-import com.alwinsden.dino.utilities.UI.defaultFontStyle
+import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.ic_dino_corner_sq
 import org.jetbrains.compose.resources.painterResource
@@ -53,7 +50,8 @@ fun UserStartupPage() {
                         incomingStyles = DefaultFontStylesDataClass(
                             fontSize = 45.sp,
                             fontWeight = FontWeight.Normal,
-                            colorInt = 0xff000000
+                            colorInt = 0xff000000,
+                            fontFamily = FontLibrary.ebGaramond()
                         )
                     ),
                     textAlign = TextAlign.Center,
@@ -69,7 +67,8 @@ fun UserStartupPage() {
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 fontSize = 18.sp,
-                                colorInt = 0xff000000
+                                colorInt = 0xff000000,
+                                fontFamily = FontLibrary.ebGaramond()
                             )
                         )
                     )

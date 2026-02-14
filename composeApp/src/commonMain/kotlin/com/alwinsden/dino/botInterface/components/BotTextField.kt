@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.PageDefaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.listModelDefinitions
@@ -104,6 +105,7 @@ fun BotTextField(mode: String? = null) {
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 colorInt = 0xff958282,
+                                fontFamily = FontLibrary.inter()
                             )
                         ),
                         modifier = Modifier.padding(vertical = 10.dp),

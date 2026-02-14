@@ -26,6 +26,7 @@ import com.alwinsden.dino.botChatInterface.components.AiUpdatedField
 import com.alwinsden.dino.botChatInterface.components.UserCreatedField
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 
 /**
@@ -117,7 +118,9 @@ fun BotChatInterface() {
             }
             Text(
                 text = "17th January 2026", textAlign = TextAlign.Center, style = defaultFontStyle(
-                    DefaultFontStylesDataClass()
+                    DefaultFontStylesDataClass(
+                        fontFamily = FontLibrary.ebGaramond()
+                    )
                 )
             )
             Row(
@@ -140,7 +143,7 @@ fun BotChatInterface() {
                     shadow = Shadow(
                         radius = 5.dp,
                         spread = 5.dp,
-                        color = Color(0xff98D6B2),
+                        color = Color(0xfff0f0f0),
                         offset = DpOffset(x = 0.dp, (3).dp)
                     )
                 )

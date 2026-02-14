@@ -29,7 +29,7 @@ fun AiUpdatedField(maxWidth: Dp) {
             )
             Spacer(Modifier.width(5.dp))
             Text(
-                "Dino", style = defaultFontStyle(
+                "synapse", style = defaultFontStyle(
                     DefaultFontStylesDataClass(
                         reduceFromDefault = 2
                     )
@@ -37,7 +37,7 @@ fun AiUpdatedField(maxWidth: Dp) {
             )
         }
         Text(
-            modifier = Modifier.padding(top = 25.dp, bottom = 15.dp),
+            modifier = Modifier.padding(top = 25.dp, bottom = 25.dp),
             style = defaultFontStyle(
                 DefaultFontStylesDataClass()
             ),
