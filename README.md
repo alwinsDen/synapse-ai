@@ -3,7 +3,7 @@
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
 
-**Author**: [Alwin's Den](https://alwinsden.com)
+**Author**: [alwinsDen.com](https://alwinsden.com)
 
 ## Overview
 
