@@ -82,16 +82,6 @@ fun BotChatInterface() {
             Spacer(Modifier.height(50.dp))
             UserCreatedField(maxWidth = mxWidth)
             AiUpdatedField(maxWidth = mxWidth)
-            UserCreatedField(maxWidth = mxWidth)
-            AiUpdatedField(maxWidth = mxWidth)
-            UserCreatedField(maxWidth = mxWidth)
-            AiUpdatedField(maxWidth = mxWidth)
-            UserCreatedField(maxWidth = mxWidth)
-            AiUpdatedField(maxWidth = mxWidth)
-            UserCreatedField(maxWidth = mxWidth)
-            AiUpdatedField(maxWidth = mxWidth)
-            UserCreatedField(maxWidth = mxWidth)
-            AiUpdatedField(maxWidth = mxWidth)
             Text(
                 "Verify the output generated.", textAlign = TextAlign.Center,
                 style = defaultFontStyle(

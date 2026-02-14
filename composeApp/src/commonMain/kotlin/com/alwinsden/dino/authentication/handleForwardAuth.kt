@@ -1,4 +1,4 @@
-package com.alwinsden.dino.sheets.authentication
+package com.alwinsden.dino.authentication
 
 //this function handles the post-google generation part.
 fun handleReceivedGoogleTokenId(gTokenId: String) {

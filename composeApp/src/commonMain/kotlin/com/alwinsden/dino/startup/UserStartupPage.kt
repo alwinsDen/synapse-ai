@@ -13,11 +13,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alwinsden.dino.authentication.ClickableContinueWithApple
+import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
+import com.alwinsden.dino.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
-import com.alwinsden.dino.sheets.authentication.ClickableContinueWithApple
-import com.alwinsden.dino.sheets.authentication.ClickableContinueWithGoogle
-import com.alwinsden.dino.sheets.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.ic_dino_corner_sq

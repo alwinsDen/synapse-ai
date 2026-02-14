@@ -1,4 +1,4 @@
-package com.alwinsden.dino.sheets.authentication
+package com.alwinsden.dino.authentication
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import com.alwinsden.dino.authentication.components.rememberAppleAuthProvider
+import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
 import com.alwinsden.dino.utilities.UI.Defaults
 import com.alwinsden.dino.utilities.UI.DialogLoader
 import dino.composeapp.generated.resources.Res

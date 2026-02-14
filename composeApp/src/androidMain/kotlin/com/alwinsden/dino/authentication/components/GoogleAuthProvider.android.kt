@@ -1,4 +1,4 @@
-package com.alwinsden.dino.sheets.authentication
+package com.alwinsden.dino.authentication.components
 
 import android.content.Context
 import android.util.Log

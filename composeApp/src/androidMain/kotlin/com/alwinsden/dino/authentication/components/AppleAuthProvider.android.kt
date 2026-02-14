@@ -1,4 +1,4 @@
-package com.alwinsden.dino.sheets.authentication
+package com.alwinsden.dino.authentication.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
