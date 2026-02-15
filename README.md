@@ -1,4 +1,15 @@
-# Project Synapse
+# Synapse - Shared UI experiment
+| Login | New conversation | interface |
+| --- | --- | --- |
+|<img width="399" height="726" alt="image" src="https://github.com/user-attachments/assets/f51c3eb9-7c72-4bc7-bfcb-63bee6d4ee67" />|<img width="360" height="728" alt="image" src="https://github.com/user-attachments/assets/2009e43f-358e-47b6-9b73-fdeefff5df56" />| <img width="358" height="729" alt="image" src="https://github.com/user-attachments/assets/b41738b9-b052-44f5-b705-65530bf01b5f" /> |
+
+| past conversation | iOS - Login | iOS - drawer |
+| --- | --- | -- |
+| <img width="399" height="725" alt="image" src="https://github.com/user-attachments/assets/dd0a170b-1cee-4219-b8a3-fec6c1a6edab" /> | <img width="360" alt="Simulator Screenshot - iPhone Air - 2026-02-15 at 21 31 44" src="https://github.com/user-attachments/assets/ff3c80f9-11cb-4a6d-af5f-9ad2325bca31" /> | <img width="360" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-15 at 22 55 12" src="https://github.com/user-attachments/assets/be05c9f0-6d71-406f-9984-1bd7e3faa9d7" /> |
+
+
+
+
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
