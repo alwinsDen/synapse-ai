@@ -42,6 +42,7 @@ fun UserCreatedField(maxWidth: Dp) {
                     .padding(8.dp)
 
             )
+            Spacer(Modifier.height(2.dp))
             Text(
                 "13:04", style = defaultFontStyle(
                     DefaultFontStylesDataClass(
