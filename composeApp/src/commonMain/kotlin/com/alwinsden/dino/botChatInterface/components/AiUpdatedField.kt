@@ -41,7 +41,7 @@ fun AiUpdatedField(maxWidth: Dp) {
             style = defaultFontStyle(
                 DefaultFontStylesDataClass()
             ),
-            text = "I'm doing great, thank you! \uD83D\uDE0A Glad to hear you're doing well. What's on your mind today?"
+            text = "I'm doing excellent, thank you for asking! I'm powered up and ready to dive into whatever you've got on your mind today."
         )
     }
 }

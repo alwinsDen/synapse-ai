@@ -158,6 +158,12 @@ fun BotChatInterface() {
             }
         },
         rememberDrawerState = drawerState,
-        historyArray = sequenceOf("testElement")
+        historyArray = sequenceOf(
+            "Project Dino, Golang, or Pluribus",
+            "Mastering Kotlin Coroutines...",
+            "Ktor vs. Golang: Backend...",
+            "Web3's Hype and Reality",
+            "Git-Native HTTP Request.."
+        )
     )
 }

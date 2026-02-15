@@ -25,7 +25,7 @@ fun UserCreatedField(maxWidth: Dp) {
             horizontalAlignment = Alignment.End,
         ) {
             Text(
-                text = "I am doing great.  What do you think you?",
+                text = "I am doing great. How are you?",
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass()
                 ), modifier = Modifier

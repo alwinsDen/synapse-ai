@@ -20,6 +20,7 @@ import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
+import dino.composeapp.generated.resources.ic_alwinsden_black_rec
 import dino.composeapp.generated.resources.ic_dino_corner_sq
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -91,6 +92,33 @@ fun UserStartupPage() {
                 modifier = Modifier.fillMaxWidth(0.7f)
             )
         }
+        Box(
+            Modifier.align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(
+                        resource = Res.drawable.ic_alwinsden_black_rec
+                    ),
+                    contentDescription = "AlwinsDen logo",
+                    Modifier.width(40.dp)
+                )
+                Text(
+                    text = "alwinsden.com",
+                    style = defaultFontStyle(
+                        DefaultFontStylesDataClass(
+                            fontFamily = FontLibrary.ebGaramond(),
+                            fontSize = 18.sp,
+                        )
+                    ),
+                    modifier = Modifier.padding(5.dp)
+                )
+            }
+        }
+
         //ErrorPopUp("lorem aisji  oajsid asiodio  asdjaijir˳")
     }
 }
