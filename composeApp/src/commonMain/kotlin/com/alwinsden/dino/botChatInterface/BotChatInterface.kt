@@ -26,7 +26,6 @@ import com.alwinsden.dino.botChatInterface.components.UserCreatedField
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.historyDrawer.HistoryDrawer
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
-import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import kotlinx.coroutines.launch
 
@@ -89,11 +88,11 @@ fun BotChatInterface() {
                     UserCreatedField(maxWidth = mxWidth)
                     AiUpdatedField(maxWidth = mxWidth)
                     Text(
-                        "Verify the output generated.", textAlign = TextAlign.Center,
+                        "Verify the generated output.", textAlign = TextAlign.Center,
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 colorInt = 0xff999999,
-                                fontFamily = FontLibrary.ebGaramond()
+                                reduceFromDefault = 4
                             )
                         ),
                         modifier = Modifier.align(Alignment.CenterHorizontally),

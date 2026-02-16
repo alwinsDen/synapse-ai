@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,7 +20,6 @@ import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.*
 import dino.composeapp.generated.resources.Res
 import dino.composeapp.generated.resources.ic_alwinsden_black_rec
-import dino.composeapp.generated.resources.ic_dino_corner_sq
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -82,16 +80,16 @@ fun UserStartupPage() {
                 }
             }
         }
-        Box(Modifier.align(Alignment.BottomEnd)) {
-            Image(
-                painter = painterResource(
-                    resource = Res.drawable.ic_dino_corner_sq,
-                ),
-                contentDescription = "Corner logo for the ",
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxWidth(0.7f)
-            )
-        }
+//        Box(Modifier.align(Alignment.BottomEnd)) {
+//            Image(
+//                painter = painterResource(
+//                    resource = Res.drawable.ic_dino_corner_sq,
+//                ),
+//                contentDescription = "Corner logo for the ",
+//                contentScale = ContentScale.FillWidth,
+//                modifier = Modifier.fillMaxWidth(0.7f)
+//            )
+//        }
         Box(
             Modifier.align(Alignment.BottomCenter)
                 .navigationBarsPadding()

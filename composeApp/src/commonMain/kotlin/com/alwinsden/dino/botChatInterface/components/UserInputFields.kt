@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 
@@ -26,6 +27,7 @@ fun UserCreatedField(maxWidth: Dp) {
         ) {
             Text(
                 text = "I am doing great. How are you?",
+                lineHeight = 25.sp,
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass()
                 ), modifier = Modifier
@@ -42,15 +44,7 @@ fun UserCreatedField(maxWidth: Dp) {
                     .padding(8.dp)
 
             )
-            Spacer(Modifier.height(2.dp))
-            Text(
-                "13:04", style = defaultFontStyle(
-                    DefaultFontStylesDataClass(
-                        reduceFromDefault = 4
-                    )
-                ), modifier = Modifier.padding(end = 15.dp)
-            )
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(20.dp))
         }
     }
 }
