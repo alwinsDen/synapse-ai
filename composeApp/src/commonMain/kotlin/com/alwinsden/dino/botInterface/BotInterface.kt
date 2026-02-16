@@ -38,7 +38,7 @@ fun BotInterface(mode: String? = null) {
                 }
             }
             Text(
-                text = "*images can be uploaded, but are not analysed.",
+                text = "*images can be uploaded, but are not saved.",
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass(
                         fontFamily = FontLibrary.inter(),

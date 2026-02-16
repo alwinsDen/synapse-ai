@@ -8,8 +8,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
@@ -44,15 +46,19 @@ fun UserStartupPage() {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    "Project Synapse",
-                    style = defaultFontStyle(
-                        incomingStyles = DefaultFontStylesDataClass(
-                            fontSize = 45.sp,
-                            fontWeight = FontWeight.Normal,
-                            colorInt = 0xff000000,
-                            fontFamily = FontLibrary.ebGaramond()
-                        )
-                    ),
+                    text = buildAnnotatedString {
+                        withStyle(
+                            SpanStyle(
+                                fontFamily = FontLibrary.ebGaramond(),
+                            )
+                        ) {
+                            append("synapse ")
+                        }
+                        withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                            append("ai")
+                        }
+                    },
+                    fontSize = 45.sp,
                     textAlign = TextAlign.Center,
                 )
             }

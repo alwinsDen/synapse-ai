@@ -28,15 +28,16 @@ fun InitializedUiState() {
             text = buildAnnotatedString {
                 withStyle(
                     SpanStyle(
-                        background = Color(0xff000000), fontFamily = FontLibrary.ebGaramond(), color = Color(0xffF3DB00)
+                        fontFamily = FontLibrary.ebGaramond(),
+                        fontSize = 30.sp
                     ),
                 ) {
-                    append(" synapse ")
+                    append("Hello Alwin.\n")
                 }
-                withStyle(SpanStyle(fontFamily = FontLibrary.inter())) {
-                    append("AI")
+                withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                    append("let's begin?")
                 }
-            }, fontSize = 60.sp, textAlign = TextAlign.Center, lineHeight = 60.sp
+            }, fontSize = 40.sp, textAlign = TextAlign.Center
         )
     }
 }

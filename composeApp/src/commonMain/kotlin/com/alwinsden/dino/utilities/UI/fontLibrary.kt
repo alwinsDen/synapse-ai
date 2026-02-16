@@ -21,6 +21,7 @@ data class DefaultFontStylesDataClass(
     val fontFamily: FontFamily? = null,
     val fontWeight: FontWeight? = null,
     val fontStyle: FontStyle? = null,
+    val lineHeight: TextUnit? = null,
     val colorInt: Long? = null,
     val reduceFromDefault: Int? = null
 )
@@ -37,6 +38,7 @@ fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
         fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
         fontSize = incomingStyles.fontSize ?: (16 - (incomingStyles.reduceFromDefault ?: 0)).sp,
         color = Color(incomingStyles.colorInt ?: 0xff000000),
+        lineHeight = incomingStyles.lineHeight ?: TextUnit.Unspecified,
     )
 }
 
