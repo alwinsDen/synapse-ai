@@ -76,45 +76,101 @@ composeApp (UI Layer)
 shared (Business Logic & HTTP Client)
     ↓ makes HTTP requests
 server (Ktor Backend) ↔ Valkey (Cache/Session Store)
+                      ↔ PostgreSQL (User Data)
 ```
 
 ### Navigation System
 - Uses `androidx.navigation.compose` with type-safe serialization
-- Three main routes defined in `composeApp/src/commonMain/kotlin/com/alwinsden/dino/navigation/routeSerializers.kt`:
-  - `LoginWindow`: Authentication screen
-  - `BotWindow`: AI model selection
-  - `BotChatWindow`: Chat interface
+- Routes defined in `composeApp/src/commonMain/kotlin/com/alwinsden/dino/navigation/routeSerializers.kt`:
+  - `LoginWindow`: Authentication / startup screen
+  - `BotWindow`: AI model selection screen
+  - `BotChatWindow`: Main chat interface
 - All navigation managed through `NavigationController` singleton in `navHostClass.kt`
+- **Start destination**: `BotChatWindow` (chat screen loads first by design)
+
+### Screens
+
+**UserStartupPage** (`startup/UserStartupPage.kt`)
+- Yellow background (`0xffF3DB00`), EB Garamond branding
+- Google + Apple sign-in options
+- Calls `createNonce()` on load to prefetch a nonce from server
+
+**BotInterface** (`botInterface/BotInterface.kt`)
+- AI model selection screen with greeting and `BotTextField`
+- Routes to `BotChatWindow` on send
+
+**BotChatInterface** (`botChatInterface/BotChatInterface.kt`)
+- Three-zone layout:
+  - **Top bar (fixed)**: Settings, date, logout, history buttons
+  - **Chat content (scrollable)**: Alternating `UserCreatedField` / `AiUpdatedField` bubbles, 70% width constraint
+  - **Bottom input (fixed)**: `BotTextField` with shadow and rounded top corners
+- Wraps content in `HistoryDrawer`
+
+**SettingsInterface** (`settingsInterface/SettingsInterface.kt`)
+- Added but currently empty — not yet implemented
+
+### Chat Components
+
+**`UserCreatedField`** (`botChatInterface/components/UserInputFields.kt`)
+- Right-aligned message bubble, gray background (`0xffF2F2F2`)
+- Rounded corners except bottom-right (15dp radius)
+
+**`AiUpdatedField`** (`botChatInterface/components/AiUpdatedField.kt`)
+- Left-aligned AI response with diamond icon
+- Action buttons: thumbs up, thumbs down, copy
+
+**`BotTextField`** (`botInterface/components/BotTextField.kt`)
+- Expandable multi-line input (max 200dp)
+- Image attachment button (no-op currently)
+- Send button: gray when empty, green (`0xff23D76E`) when filled
+- AI model selection bottom sheet (modal); default model: `ModelDefinitions.CLAUDE`
+
+**`HistoryDrawer`** (`historyDrawer/HistoryDrawer.kt`)
+- `ModalNavigationDrawer` wrapper, 80% screen width
+- Scrollable conversation history list (`weight(1f)` + `verticalScroll`)
+- Fixed bottom section: user email + settings icon
 
 ### Authentication Architecture
-The app uses Google Sign-In with nonce-based security:
+The app supports Google Sign-In and Apple Sign-In with nonce-based security:
 
-1. **Nonce Generation**: Client requests nonce from server → stored in Valkey with 60s TTL
+1. **Nonce Generation**: Client calls `createNonce()` → server generates UUID → stored in Valkey with 60s TTL
 2. **Platform Sign-In**:
-   - Android: Uses `androidx.credentials` API with Google ID integration
-   - iOS: Uses CocoaPods GoogleSignIn SDK (wrapped in `GoogleAuthenticator`)
+   - Android: `androidx.credentials` API (`GoogleAuthProvider.android.kt`)
+   - iOS: CocoaPods GoogleSignIn SDK + native Sign in with Apple (`GoogleAuthProvider.ios.kt`, `AppleAuthProvider.ios.kt`)
 3. **Token Verification**: Server validates Google ID token and checks nonce in Valkey cache
-4. **JWT Generation**: TODO - currently returns success after validation
+4. **User Persistence**: Verified user stored/updated in PostgreSQL via `UserInfoDbActions`
+5. **JWT Generation**: TODO — currently returns placeholder text after validation
 
 Key files:
-- `composeApp/src/commonMain/kotlin/com/alwinsden/dino/sheets/authentication/ContinueWithGoogle.kt` (expect)
-- `composeApp/src/androidMain/kotlin/...ContinueWithGoogle.android.kt` (actual)
-- `composeApp/src/iosMain/kotlin/...ContinueWithGoogle.ios.kt` (actual)
+- `composeApp/src/commonMain/kotlin/com/alwinsden/dino/sheets/authentication/GoogleAuthProvider.kt` (expect)
+- `composeApp/src/commonMain/kotlin/com/alwinsden/dino/sheets/authentication/AppleAuthProvider.kt` (expect)
+- `composeApp/src/androidMain/kotlin/.../GoogleAuthProvider.android.kt` (actual)
+- `composeApp/src/iosMain/kotlin/.../GoogleAuthProvider.ios.kt` (actual)
+- `composeApp/src/iosMain/kotlin/.../AppleAuthProvider.ios.kt` (actual)
+- `composeApp/src/commonMain/kotlin/.../SignInMethod.kt` — `ClickableContinueWithGoogle`, `ClickableContinueWithApple` composables
+- `composeApp/src/commonMain/kotlin/.../handleForwardAuth.kt` — `handleReceivedGoogleTokenId()` (TODO: send token to server)
 - `server/src/main/kotlin/com/alwinsden/dino/googleAuthn/serverManager/serverManager.kt`
 
 ### HTTP Request Management
 Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`:
 - `RequestManager`: Wraps Ktor HttpClient with platform-specific base URLs
 - `IClientInterface`: Abstraction for platform-specific configuration
-- Extension functions for endpoints: `healthCheck()`, `createNonce()`
+- Extension functions for endpoints: `healthCheck()`, `createNonce()` (in `get/generalManagement.kt`)
 - Platform-specific engines:
   - Android: OkHttp (`shared/src/androidMain`)
   - iOS: Darwin/URLSession (`shared/src/iosMain`)
+- `ClientKtorConfiguration` (in `utilities/UI/keyConfigurations.kt`) — implements `IClientInterface`, reads `BuildKonfig.KTOR_ENTRY_URL`
 
 ### Error Handling
-- Custom `CustomInAppException` hierarchy in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/utils/`
-- Server uses Ktor `StatusPages` plugin to map exceptions to HTTP responses
-- Serialized errors via `ErrorObjectCustom` for consistent client-side handling
+- Custom `CustomInAppException(appCode, message)` hierarchy in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/utils/`
+- `ErrorObjectCustom` — serializable error DTO returned by server
+- `ErrorTypeEnums` — CUSTOM(0), UNCONTROLLED_EXCEPTION(1), UNCONTROLLED_STATE(2), UNCONTROLLED_THROWABLE(3)
+- `ErrorString` map — error code → human-readable message (e.g. 1000: "Invalid security token.")
+- Server uses Ktor `StatusPages` plugin to map exceptions to HTTP responses:
+  - `CustomInAppException` → 400
+  - `IllegalArgumentException` → 400
+  - `IllegalStateException` → 401
+  - `Throwable` → 500
 
 ### Configuration Management
 
@@ -127,7 +183,7 @@ Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`
 - For iOS: Auto-generates `iosApp/Configuration/Google.xcconfig` during build
 
 **Runtime configuration**:
-- Server: `server/src/main/resources/application.conf` for Ktor settings, Valkey connection, Google audience
+- Server: `server/src/main/resources/application.conf` for Ktor settings, Valkey connection, Google audience, PostgreSQL credentials
 
 ## Key Technology Choices
 
@@ -141,14 +197,45 @@ Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`
 - **Server**: Netty-based backend with ContentNegotiation and StatusPages plugins
 
 ### Valkey/Glide (v2.2.5)
-- Redis-compatible cache for session/nonce storage
+- Redis-compatible cache for nonce/session storage
 - Server-side only (JVM target)
+- `ValkeyManager` singleton in `server/src/main/kotlin/com/alwinsden/dino/valkeyManager/glideInitiator.kt`
 - **Important**: The dependency uses platform-specific classifiers. Current setup uses `osx-aarch_64`. Change classifier in `server/build.gradle.kts` when building for other platforms.
+
+### PostgreSQL + Exposed ORM
+- User data persistence on the server
+- `UserInfo` table: `id` (UUID PK), `googleSubjectId` (unique), `userFullName`, `userGoogleProfile`, `userEmail`
+- Table defined in `server/src/main/kotlin/com/alwinsden/dino/googleAuthn/serverManager/tables/userInfo_table.kt`
+- Connection credentials read from `application.conf`
 
 ### CocoaPods Integration
 - iOS native dependencies managed via `shared/build.gradle.kts` cocoapods block
 - Currently integrates GoogleSignIn pod
 - Podfile location: `iosApp/Podfile`
+
+## Utilities
+
+### Font Library (`utilities/UI/fontLibrary.kt`)
+- `DefaultFontStylesDataClass` — configuration for text styles (fontSize, fontFamily, colorInt, lineHeight)
+- `defaultFontStyle()` — composable returning `TextStyle`
+- `FontLibrary` object: `ebGaramond()` (4 weights), `inter()` (6 weights)
+
+### Key Configurations (`utilities/UI/keyConfigurations.kt`)
+- `ClientKtorConfiguration` — implements `IClientInterface`
+- `Defaults` object — constants (e.g. `DEFAULT`)
+- `PageDefaults` object — mode constants for `BotTextField`
+- `listModelDefinitions` — list of available AI models
+
+### Model Definitions (`botInterface/components/enums.kt`)
+```kotlin
+enum class ModelDefinitions {
+    CLAUDE,   // Claude Opus
+    LOCL_V1   // Locl V1
+}
+```
+
+### User Blocking / Loaders (`utilities/UI/userBlocking.kt`)
+- `DialogLoader(isLoading: Boolean)` — full-screen transparent dialog with `CircularProgressIndicator`
 
 ## Platform-Specific Considerations
 
@@ -156,20 +243,22 @@ Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`
 - Target SDK 36, Min SDK 24
 - Modern Credentials API for authentication (not legacy GoogleSignIn)
 - JVM 11 compilation target
+- Entry point: `composeApp/src/androidMain/kotlin/.../MainActivity.kt`
 
 ### iOS
 - Deployment target: iOS 26.0
 - Compose compiles to Swift-compatible framework (`SharedFramework`)
 - SwiftUI wrapper bridges Kotlin Compose UI
-- Native authentication via CocoaPods GoogleSignIn
+- Native authentication via CocoaPods GoogleSignIn + Sign in with Apple
+- Entry point: `composeApp/src/iosMain/kotlin/.../MainViewController.kt`
 
 ### Server (JVM)
 - Main class: `com.alwinsden.dino.KtorStartKt` in `server/src/main/kotlin/com/alwinsden/dino/KtorStart.kt`
 - Lazy Valkey initialization on startup
 - Endpoints:
-  - `GET /health`: Health check
+  - `GET /health`: Health check → `"Ktor is healthy."`
   - `GET /generate-nonce`: UUID generation with Valkey caching
-  - `POST /login`: Google token verification
+  - `POST /login`: Google token verification + user upsert in PostgreSQL
 
 ## Development Workflow
 
@@ -186,7 +275,7 @@ Centralized in `shared/src/commonMain/kotlin/com/alwinsden/dino/requestManager/`
 ### Platform-Specific Code
 1. Declare `expect` function/class in `commonMain`
 2. Provide `actual` implementation in `androidMain`, `iosMain`, or `jvmMain`
-3. Example: See `ContinueWithGoogle.kt` authentication implementations
+3. Example: See `GoogleAuthProvider.kt` / `AppleAuthProvider.kt` authentication implementations
 
 ### Managing Secrets
 - Never commit `secret.properties` to git

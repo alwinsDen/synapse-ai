@@ -1,5 +1,13 @@
 # synapse - shared UI experiment
 
+## For AI Coding Agents
+
+This project uses [`AGENTS.md`](./AGENTS.md) as the single source of truth for agent instructions — compatible with Claude Code, Gemini CLI, Codex, Cursor, and any tool that supports the [AGENTS.md open standard](https://agents.md).
+
+> `CLAUDE.md` is auto-generated from `AGENTS.md` during Gradle sync and is git-ignored. **Edit `AGENTS.md` only.**
+
+---
+
 ### Compose iOS screenshots
 | login | new conversation | interface | past conversations |
 | --- | --- | --- | --- |
