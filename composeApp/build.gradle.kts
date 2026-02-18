@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeHotReload)
     alias(libs.plugins.buildKonfig)
     kotlin("plugin.serialization").version("2.3.0")
 }
@@ -26,6 +27,8 @@ kotlin {
             isStatic = true
         }
     }
+
+    jvm()
 
     sourceSets {
         androidMain.dependencies {
@@ -52,6 +55,11 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutinesSwing)
         }
     }
 }
