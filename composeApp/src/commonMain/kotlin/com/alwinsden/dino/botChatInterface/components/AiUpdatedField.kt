@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alwinsden.dino.botChatInterface.previews.chat_samples_BotChatInterface
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 
@@ -37,7 +38,7 @@ fun AiUpdatedField(maxWidth: Dp) {
                     DefaultFontStylesDataClass()
                 ),
                 lineHeight = 25.sp,
-                text = "I'm doing excellent, thank you for asking! I'm powered up and ready to dive into whatever you've got on your mind today."
+                text = chat_samples_BotChatInterface.model_response
             )
             Row() {
                 IconButton(

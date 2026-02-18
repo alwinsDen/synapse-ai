@@ -3,7 +3,6 @@ package com.alwinsden.dino.historyDrawer
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -53,12 +52,14 @@ fun HistoryDrawer(
                         )
                     }
                     Spacer(Modifier.height(10.dp))
-                    Spacer(Modifier.height(2.dp)
-                        .fillMaxWidth(.9f)
-                        .border(
-                        color = Color(0xff000000),
-                        width = 2.dp
-                    ))
+                    Spacer(
+                        Modifier.height(1.dp)
+                            .fillMaxWidth(.9f)
+                            .border(
+                                color = Color(0xff000000),
+                                width = 2.dp
+                            )
+                    )
                     Spacer(Modifier.height(10.dp))
 
                     Column(
@@ -96,17 +97,18 @@ fun HistoryDrawer(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 10.dp)
+                                .padding(start = 15.dp)
 
-                        ){
-                            Row(){
-                                Text(text = "alwintv5018@gmail.com", style =
-                                    defaultFontStyle(
-                                        DefaultFontStylesDataClass(
-                                            fontFamily = FontLibrary.ebGaramond(),
-                                            fontSize = 20.sp
+                        ) {
+                            Row() {
+                                Text(
+                                    text = "alwintv5018@gmail.com", style =
+                                        defaultFontStyle(
+                                            DefaultFontStylesDataClass(
+                                                fontFamily = FontLibrary.ebGaramond(),
+                                                fontSize = 20.sp
+                                            )
                                         )
-                                    )
                                 )
                             }
                             IconButton(onClick = { }) {

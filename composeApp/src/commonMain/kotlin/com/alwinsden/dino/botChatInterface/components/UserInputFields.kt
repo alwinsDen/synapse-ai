@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alwinsden.dino.botChatInterface.previews.chat_samples_BotChatInterface
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 
@@ -26,7 +27,7 @@ fun UserCreatedField(maxWidth: Dp) {
             horizontalAlignment = Alignment.End,
         ) {
             Text(
-                text = "I am doing great. How are you?",
+                text = chat_samples_BotChatInterface.user_message,
                 lineHeight = 25.sp,
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass()

@@ -8,11 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.NewLabel
-import androidx.compose.material.icons.filled.NewReleases
-import androidx.compose.material.icons.filled.Pending
 import androidx.compose.material.icons.filled.PowerSettingsNew
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.botChatInterface.components.AiUpdatedField
 import com.alwinsden.dino.botChatInterface.components.UserCreatedField
+import com.alwinsden.dino.botChatInterface.previews.chat_samples_BotChatInterface
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.historyDrawer.HistoryDrawer
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
@@ -117,7 +114,9 @@ fun BotChatInterface() {
                         .padding(start = 10.dp)
                 ) {
                     Text(
-                        text = "Checking on me how I am....", textAlign = TextAlign.Center, style = defaultFontStyle(
+                        text = chat_samples_BotChatInterface.chat_title,
+                        textAlign = TextAlign.Center,
+                        style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Normal,
