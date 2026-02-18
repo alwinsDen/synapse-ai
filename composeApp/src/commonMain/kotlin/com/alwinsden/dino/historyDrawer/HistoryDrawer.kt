@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
@@ -72,18 +73,23 @@ fun HistoryDrawer(
                                 label = {
                                     Text(
                                         text = it,
+                                        modifier = Modifier.weight(1f, fill = false),
                                         style = defaultFontStyle(
                                             DefaultFontStylesDataClass(
-                                                colorInt = 0xff4F4F4F
+                                                colorInt = 0xff4F4F4F,
+                                                fontFamily = FontLibrary.ebGaramond(),
+                                                fontSize = 20.sp
                                             )
-                                        )
+                                        ),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
                                     )
                                 },
                                 selected = false,
                                 onClick = {
                                     //
                                 },
-                                modifier = Modifier.height(50.dp),
+                                modifier = Modifier.height(50.dp)
                             )
                         }
                     }

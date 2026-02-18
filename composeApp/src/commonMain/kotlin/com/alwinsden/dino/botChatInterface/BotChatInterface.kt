@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,16 +117,19 @@ fun BotChatInterface() {
                     Text(
                         text = chat_samples_BotChatInterface.chat_title,
                         textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .weight(1f, fill = false),
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Normal,
                                 fontFamily = FontLibrary.ebGaramond()
                             )
-                        )
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
                     )
                     Row(
-                        modifier = Modifier.weight(1f, true),
                         horizontalArrangement = Arrangement.End,
                     ) {
                         IconButton(onClick = { }) {
@@ -168,12 +172,6 @@ fun BotChatInterface() {
             }
         },
         rememberDrawerState = drawerState,
-        historyArray = sequenceOf(
-            "Project Dino, Golang, or Pluribus",
-            "Mastering Kotlin Coroutines...",
-            "Ktor vs. Golang: Backend...",
-            "Web3's Hype and Reality",
-            "Git-Native HTTP Request.."
-        )
+        historyArray = chat_samples_BotChatInterface.history_list
     )
 }

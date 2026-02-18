@@ -19,5 +19,14 @@ object chat_samples_BotChatInterface {
                 "What made it so awesome? Did you hit a major milestone, or was it just one of those days where everything finally clicked into place?\n" +
                 "\n" +
                 "I'd love to hear the highlights if you're up for sharing!"
-    var chat_title = "Checking on me how I am...."
+    var chat_title = "Checking on me how I am doing today."
+
+    var history_list = sequenceOf(
+        "Checking on me how I am doing to",
+        "Better call saul vs Plur1bus",
+        "Mastering Kotlin Coroutines with",
+        "Explain KTOR performance benefits of KTOR",
+        "Web3's Hype and Reality + downfall",
+        "Git-Native HTTP Request"
+    )
 }
