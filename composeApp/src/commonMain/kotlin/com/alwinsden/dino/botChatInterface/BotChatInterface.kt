@@ -6,7 +6,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.NewLabel
+import androidx.compose.material.icons.filled.NewReleases
+import androidx.compose.material.icons.filled.Pending
 import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -18,14 +22,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.botChatInterface.components.AiUpdatedField
 import com.alwinsden.dino.botChatInterface.components.UserCreatedField
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.historyDrawer.HistoryDrawer
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import kotlinx.coroutines.launch
 
@@ -84,7 +91,7 @@ fun BotChatInterface() {
                 Column(
                     Modifier.verticalScroll(state = verticalScrollState)
                 ) {
-                    Spacer(Modifier.height(50.dp))
+                    Spacer(Modifier.height(60.dp))
                     UserCreatedField(maxWidth = mxWidth)
                     AiUpdatedField(maxWidth = mxWidth)
                     Text(
@@ -107,19 +114,24 @@ fun BotChatInterface() {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                         .background(color = Color(0xffffffff))
+                        .padding(start = 10.dp)
                 ) {
-                    IconButton(onClick = { }) {
-                        Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
-                    }
                     Text(
-                        text = "17th January 2026", textAlign = TextAlign.Center, style = defaultFontStyle(
-                            DefaultFontStylesDataClass()
+                        text = "Checking on me how I am....", textAlign = TextAlign.Center, style = defaultFontStyle(
+                            DefaultFontStylesDataClass(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Normal,
+                                fontFamily = FontLibrary.ebGaramond()
+                            )
                         )
                     )
                     Row(
                         modifier = Modifier.weight(1f, true),
                         horizontalArrangement = Arrangement.End,
                     ) {
+                        IconButton(onClick = { }) {
+                            Icon(imageVector = Icons.Default.EditNote, contentDescription = "Start New chat")
+                        }
                         IconButton(onClick = { }) {
                             Icon(imageVector = Icons.Default.PowerSettingsNew, contentDescription = "Logout app")
                         }

@@ -78,7 +78,8 @@ fun ModelSelectionRadioMenu(
             Text(
                 text = state.description, style = defaultFontStyle(
                     DefaultFontStylesDataClass(
-                        reduceFromDefault = 4
+                        reduceFromDefault = 2,
+                        fontFamily = FontLibrary.ebGaramond()
                     )
                 )
             )
