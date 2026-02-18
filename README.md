@@ -3,7 +3,7 @@
 ### Compose iOS screenshots
 | login | new conversation | interface | past conversations |
 | --- | --- | --- | --- |
-| <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 33 04" src="https://github.com/user-attachments/assets/3919f032-2764-4205-8520-3448fcc963b2" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 33 23" src="https://github.com/user-attachments/assets/4f68cf56-be74-44b9-b977-951e71371eea" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 32 30" src="https://github.com/user-attachments/assets/c0e47401-0c6b-4f74-b16b-0086e7fdc21c" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 32 23" src="https://github.com/user-attachments/assets/ac98be19-2b56-4592-aeae-cdae6aad8d0e" /> |
+| <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 37" src="https://github.com/user-attachments/assets/4675005b-9898-44e4-9d0f-ddbb7d97ac13" />| <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 55" src="https://github.com/user-attachments/assets/784ec2f7-8bdf-456b-b684-dc8bbfcea4fc" />| <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 37 13" src="https://github.com/user-attachments/assets/36998167-56ea-4502-aa3a-25b0ca38987c" />|<img width="342" height="796" alt="Screenshot 2026-02-18 at 09 37 28" src="https://github.com/user-attachments/assets/0b984571-7746-43ff-a01f-88d89c920aee" />|
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
