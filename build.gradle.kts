@@ -10,3 +10,10 @@ plugins {
     alias(libs.plugins.ktor) apply false
     alias(libs.plugins.kotlinCocoapods) apply false
 }
+
+// Sync AGENTS.md → CLAUDE.md during Gradle sync (cross-platform, no symlinks needed)
+val agentsMd = rootDir.resolve("AGENTS.md")
+val claudeMd = rootDir.resolve("CLAUDE.md")
+if (agentsMd.exists()) {
+    claudeMd.writeText(agentsMd.readText())
+}

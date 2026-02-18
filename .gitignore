@@ -25,3 +25,4 @@ xcuserdata/
 *.podspec
 iosApp/Configuration/Google.xcconfig
 /glide-logs
+CLAUDE.md

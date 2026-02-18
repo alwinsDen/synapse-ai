@@ -1,13 +1,15 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents (Claude Code, Gemini CLI, Codex, Cursor, etc.) when working with code in this repository.
 
-## Claude-Specific Rules
+> **Note for agents**: This is the source of truth. `CLAUDE.md` is auto-generated from this file during Gradle sync — do not edit it directly.
+
+## Agent Rules
 
 ### Commit and Documentation Policy
 - **IMPORTANT**: Whenever you make a commit that affects or adds any new architectural changes, you MUST update the README.md file to reflect those changes.
 - Keep README.md synchronized with architectural decisions, new features, and significant structural changes.
-- README.md is user-facing documentation; CLAUDE.md is for Claude Code instructions only.
+- README.md is user-facing documentation; AGENTS.md is for AI agent instructions only.
 - **NEVER commit automatically**: Always stage files with `git add`, draft the commit message, then ask the user to review before executing `git commit`. Wait for explicit approval before committing.
 - **Do NOT include Co-Authored-By line**: Do not add "Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>" or any similar attribution in commit messages.
 
