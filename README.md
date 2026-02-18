@@ -3,7 +3,7 @@
 ### Compose iOS screenshots
 | login | new conversation | interface | past conversations |
 | --- | --- | --- | --- |
-| <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 07" src="https://github.com/user-attachments/assets/f3407826-d5b4-4710-914b-1e046820e6b2" /> | <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 38" src="https://github.com/user-attachments/assets/24aa40c7-6167-46b4-b181-a1f4b774f200" /> |<img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 56" src="https://github.com/user-attachments/assets/331db823-5de1-42c6-9e92-e50fc1960674" /> | <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 15 04" src="https://github.com/user-attachments/assets/23f7ced1-e944-4996-ab01-95ef9aaedcfb" /> |
+| <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 33 04" src="https://github.com/user-attachments/assets/3919f032-2764-4205-8520-3448fcc963b2" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 33 23" src="https://github.com/user-attachments/assets/4f68cf56-be74-44b9-b977-951e71371eea" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 32 30" src="https://github.com/user-attachments/assets/c0e47401-0c6b-4f74-b16b-0086e7fdc21c" /> | <img width="341" height="788" alt="Screenshot 2026-02-18 at 08 32 23" src="https://github.com/user-attachments/assets/ac98be19-2b56-4592-aeae-cdae6aad8d0e" /> |
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
