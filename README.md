@@ -1,7 +1,9 @@
 # synapse - shared UI experiment
+
+### Compose iOS screenshots
 | login | new conversation | interface | past conversations |
 | --- | --- | --- | --- |
-| <img width="1080" height="2340" alt="image" src="https://github.com/user-attachments/assets/c987a7ac-8486-42fa-bfd3-12b2a41295c5" /> | <img width="1080" height="2340" alt="image" src="https://github.com/user-attachments/assets/e0973ca3-b3f6-468e-ba8f-4e3de865031a" /> |<img width="1080" height="2340" alt="image" src="https://github.com/user-attachments/assets/750eab2d-1e5c-4269-8273-f0d8943d2ece" /> | <img width="1080" height="2340" alt="image" src="https://github.com/user-attachments/assets/1453b0f3-1c50-4748-875c-35a9bc41e186" /> |
+| <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 07" src="https://github.com/user-attachments/assets/f3407826-d5b4-4710-914b-1e046820e6b2" /> | <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 38" src="https://github.com/user-attachments/assets/24aa40c7-6167-46b4-b181-a1f4b774f200" /> |<img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 14 56" src="https://github.com/user-attachments/assets/331db823-5de1-42c6-9e92-e50fc1960674" /> | <img width="1260" height="2736" alt="Simulator Screenshot - iPhone Air - 2026-02-18 at 08 15 04" src="https://github.com/user-attachments/assets/23f7ced1-e944-4996-ab01-95ef9aaedcfb" /> |
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
