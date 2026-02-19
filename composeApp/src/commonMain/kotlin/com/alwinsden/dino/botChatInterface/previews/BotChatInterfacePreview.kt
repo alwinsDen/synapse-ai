@@ -22,7 +22,7 @@ object chat_samples_BotChatInterface {
     var chat_title = "Checking on me how I am doing today."
 
     var history_list = sequenceOf(
-        "Checking on me how I am doing to",
+        "Checking on me how I am doing today",
         "Better call saul vs Plur1bus",
         "Mastering Kotlin Coroutines with",
         "Explain KTOR performance benefits of KTOR",
