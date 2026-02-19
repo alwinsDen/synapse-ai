@@ -11,7 +11,7 @@ This project uses [`AGENTS.md`](./AGENTS.md) as the single source of truth for a
 ### Compose iOS screenshots
 | login | new conversation | interface | past conversations |
 | --- | --- | --- | --- |
-| <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 37" src="https://github.com/user-attachments/assets/4675005b-9898-44e4-9d0f-ddbb7d97ac13" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 55" src="https://github.com/user-attachments/assets/784ec2f7-8bdf-456b-b684-dc8bbfcea4fc" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 23 56 33" src="https://github.com/user-attachments/assets/f142e31b-49b9-42ad-b596-87b6ce7ba341" /> |<img width="342" height="796" alt="Screenshot 2026-02-18 at 09 37 28" src="https://github.com/user-attachments/assets/0b984571-7746-43ff-a01f-88d89c920aee" />|
+| <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 37" src="https://github.com/user-attachments/assets/4675005b-9898-44e4-9d0f-ddbb7d97ac13" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 55" src="https://github.com/user-attachments/assets/784ec2f7-8bdf-456b-b684-dc8bbfcea4fc" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 23 56 33" src="https://github.com/user-attachments/assets/f142e31b-49b9-42ad-b596-87b6ce7ba341" /> | <img width="342" height="796" alt="image" src="https://github.com/user-attachments/assets/df13e565-1983-43f8-8386-7fe745e883f4" /> |
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Ktor backend.
