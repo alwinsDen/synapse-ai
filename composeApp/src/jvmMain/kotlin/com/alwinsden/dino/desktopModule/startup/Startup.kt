@@ -1,4 +1,4 @@
-package com.alwinsden.dino.startup
+package com.alwinsden.dino.desktopModule.startup
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
