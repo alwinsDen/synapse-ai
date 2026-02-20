@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.alwinsden.dino.botChatInterface.BotChatInterface
 import com.alwinsden.dino.botInterface.BotInterface
+import com.alwinsden.dino.settingsInterface.SettingsInterface
 import com.alwinsden.dino.startup.UserStartupPage
 
 object NavigationController {
@@ -22,6 +23,9 @@ object NavigationController {
             }
             composable<BotChatWindow> {
                 BotChatInterface()
+            }
+            composable<SettingsNavigation> {
+                SettingsInterface()
             }
         }
     }

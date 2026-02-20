@@ -10,3 +10,6 @@ object BotWindow
 
 @Serializable
 object BotChatWindow
+
+@Serializable
+object SettingsNavigation
