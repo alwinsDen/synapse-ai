@@ -15,9 +15,9 @@ class IOSGoogleAuthProvider(
         return try {
             var capturedResult: Result<String> = Result.failure(Exception("Sign-in not completed"))
 
-            val token = authenticator.login { loadingState ->
+            val token = authenticator.iosLogin({ loadingState ->
                 // Loading state callback - handled by UI layer
-            }
+            }, nonce)
 
             if (token != null) {
                 Result.success(token)
@@ -30,7 +30,11 @@ class IOSGoogleAuthProvider(
     }
 
     override suspend fun checkExistingCredentials(nonce: String): String? {
-        return authenticator.checkExisting()
+        return authenticator.iosCheckExisting()
+    }
+
+    override suspend fun logoutFromGoogle() {
+        authenticator.iosGoogleLogout()
     }
 }
 

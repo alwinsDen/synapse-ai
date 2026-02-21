@@ -103,6 +103,10 @@ class AndroidGoogleAuthProvider(
             }
         }
     }
+
+    override suspend fun logoutFromGoogle() {
+        TODO("NEED TO IMPLEMENT FOR ANDROID.")
+    }
 }
 
 @Composable

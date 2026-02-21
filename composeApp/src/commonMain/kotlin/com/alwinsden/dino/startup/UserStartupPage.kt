@@ -2,6 +2,10 @@ package com.alwinsden.dino.startup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,17 +19,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
+import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
 import com.alwinsden.dino.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.*
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
 fun UserStartupPage() {
     var nonce by remember { mutableStateOf(Defaults.default) }
+    var scope = rememberCoroutineScope()
+    val authProvider = rememberGoogleAuthProvider()
     LaunchedEffect(Unit) {
         //nonce is fetched from the requested server.
         nonce = RequestManager(ClientKtorConfiguration()).createNonce()
@@ -36,6 +44,20 @@ fun UserStartupPage() {
             .statusBarsPadding()
             .fillMaxSize(),
     ) {
+        Box(
+            Modifier.align(Alignment.TopEnd)
+        ) {
+            IconButton(onClick = {
+                scope.launch {
+                    authProvider.logoutFromGoogle()
+                }
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Logout,
+                    contentDescription = ""
+                )
+            }
+        }
         Box(Modifier.align(Alignment.Center)) {
             Row(
                 modifier = Modifier
