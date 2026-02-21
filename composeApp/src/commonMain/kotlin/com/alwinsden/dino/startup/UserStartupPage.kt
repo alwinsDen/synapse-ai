@@ -23,6 +23,7 @@ import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
 import com.alwinsden.dino.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
+import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.*
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ fun UserStartupPage() {
     var nonce by remember { mutableStateOf(Defaults.default) }
     var scope = rememberCoroutineScope()
     val authProvider = rememberGoogleAuthProvider()
+    var logoutModalState = remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         //nonce is fetched from the requested server.
         nonce = RequestManager(ClientKtorConfiguration()).createNonce()
@@ -48,15 +50,27 @@ fun UserStartupPage() {
             Modifier.align(Alignment.TopEnd)
         ) {
             IconButton(onClick = {
-                scope.launch {
-                    authProvider.logoutFromGoogle()
-                }
+                logoutModalState.value = true
             }) {
                 Icon(
                     imageVector = Icons.Default.Logout,
                     contentDescription = ""
                 )
             }
+        }
+        if (logoutModalState.value) {
+            UiConfirmModal("Are you sure you want to logout of Google?", { confirmState ->
+                if (confirmState) {
+                    scope.launch {
+                        authProvider.logoutFromGoogle()
+                    }.apply {
+                        logoutModalState.value = false
+                        println("logged out")
+                    }
+                } else {
+                    logoutModalState.value = false
+                }
+            })
         }
         Box(Modifier.align(Alignment.Center)) {
             Row(
