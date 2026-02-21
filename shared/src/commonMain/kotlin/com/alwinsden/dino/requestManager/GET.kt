@@ -1,6 +1,5 @@
-package com.alwinsden.dino.requestManager.get
+package com.alwinsden.dino.requestManager
 
-import com.alwinsden.dino.requestManager.RequestManager
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 

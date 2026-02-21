@@ -9,6 +9,4 @@ class RequestManager(private val requestConfig: IClientInterface) {
             url(requestConfig.baseUrl)
         }
     }
-
-
 }

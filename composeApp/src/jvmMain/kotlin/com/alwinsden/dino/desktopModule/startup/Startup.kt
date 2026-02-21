@@ -24,13 +24,16 @@ fun Startup() {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row() {
+            Row(
+                modifier = Modifier.weight(1f, false)
+            ) {
                 Text(
                     text = "path: ",
                     color = Color.DarkGray
                 )
                 Text(
                     text = if (parentFolder == "") "Select a folder path" else parentFolder,
+                    modifier = Modifier.fillMaxWidth(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )

@@ -16,6 +16,7 @@ junit = "4.13.2"
 kotlin = "2.3.0"
 kotlinx-coroutines = "1.10.2"
 ktor = "3.3.3"
+lifecycleViewmodel = "2.10.0"
 logback = "1.5.22"
 buildKonfig = "0.17.1"
 materialIconsCore = "1.7.8"
@@ -29,6 +30,7 @@ h2 = "2.4.240"
 
 
 [libraries]
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "googleApiClient" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

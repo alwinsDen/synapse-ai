@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
-import com.alwinsden.dino.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.requestManager.RequestManager
-import com.alwinsden.dino.requestManager.get.createNonce
+import com.alwinsden.dino.requestManager.createNonce
+import com.alwinsden.dino.requestManager.utils.handleReceivedGoogleTokenId
 import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.*
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
@@ -59,7 +59,7 @@ fun UserStartupPage() {
             }
         }
         if (logoutModalState.value) {
-            UiConfirmModal("Are you sure you want to logout of Google?", { confirmState ->
+            UiConfirmModal("Are you sure you want to log out of Google account?", { confirmState ->
                 if (confirmState) {
                     scope.launch {
                         authProvider.logoutFromGoogle()

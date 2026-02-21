@@ -7,11 +7,11 @@ import platform.UIKit.*
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-actual fun UiConfirmModal(message: String, userState: (confirmed: Boolean) -> Unit) {
+actual fun UiConfirmModal(message: String, userState: (confirmed: Boolean) -> Unit, showCancel: Boolean?) {
     LaunchedEffect(Unit) {
         val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
         val alert = UIAlertController.alertControllerWithTitle(
-            title = "Leaving?",
+            title = "Leaving ?",
             message = message,
             preferredStyle = UIAlertControllerStyleAlert,
         )
