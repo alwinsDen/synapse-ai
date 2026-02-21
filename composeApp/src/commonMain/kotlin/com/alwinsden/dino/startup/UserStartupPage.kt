@@ -49,7 +49,7 @@ fun UserStartupPage() {
                                 fontFamily = FontLibrary.ebGaramond(),
                             )
                         ) {
-                            append("synapsess ")
+                            append("synapse ")
                         }
                         withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
                             append("ai")
