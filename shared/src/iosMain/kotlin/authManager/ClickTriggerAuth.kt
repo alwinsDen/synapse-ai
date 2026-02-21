@@ -5,12 +5,11 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import platform.UIKit.UIApplication
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class GoogleAuthenticator {
     @OptIn(ExperimentalForeignApi::class)
     suspend fun iosLogin(controlLoadingState: (Boolean) -> Unit, nonce: String) =
-        suspendCoroutine<String?> { continuation ->
+        suspendCancellableCoroutine<String?> { continuation ->
             val rootUiView = UIApplication.sharedApplication
                 .keyWindow?.rootViewController
             if (rootUiView == null) {
@@ -41,7 +40,7 @@ class GoogleAuthenticator {
         }
 
     @OptIn(ExperimentalForeignApi::class)
-    suspend fun iosCheckExisting() = suspendCoroutine<String?> { continuation ->
+    suspend fun iosCheckExisting() = suspendCancellableCoroutine<String?> { continuation ->
         GIDSignIn.sharedInstance.restorePreviousSignInWithCompletion { user, nsError ->
             if (nsError != null || user == null) {
                 continuation.resume(null)
