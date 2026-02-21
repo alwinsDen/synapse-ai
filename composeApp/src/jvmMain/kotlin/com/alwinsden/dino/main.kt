@@ -8,7 +8,7 @@ import com.alwinsden.dino.desktopModule.navigation.NavigationControllerSynapseDe
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "synapse desktop",
+        title = "Synapse Desktop",
     ) {
         Runner()
     }
