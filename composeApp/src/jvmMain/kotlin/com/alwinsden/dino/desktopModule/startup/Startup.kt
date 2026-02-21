@@ -12,12 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import javax.swing.JFileChooser
 
 @Composable
 fun Startup() {
     var parentFolder by remember { mutableStateOf("") }
-    BoxWithConstraints(modifier = Modifier.fillMaxSize().padding(10.dp)) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize().padding(vertical = 5.dp, horizontal = 10.dp)) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -29,7 +30,7 @@ fun Startup() {
                     color = Color.DarkGray
                 )
                 Text(
-                    text = parentFolder ?: "Select a valid folder path",
+                    text = if (parentFolder == "") "Select a folder path" else parentFolder,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -76,6 +77,11 @@ fun Startup() {
                     }
                 }
             }
+        }
+        Box(
+            modifier = Modifier.align(Alignment.BottomEnd)
+        ) {
+            AlwinsDenIcon()
         }
     }
 }

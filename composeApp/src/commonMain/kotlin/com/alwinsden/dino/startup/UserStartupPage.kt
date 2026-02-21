@@ -1,6 +1,5 @@
 package com.alwinsden.dino.startup
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
@@ -20,9 +19,7 @@ import com.alwinsden.dino.authentication.handleReceivedGoogleTokenId
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.get.createNonce
 import com.alwinsden.dino.utilities.UI.*
-import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.ic_alwinsden_black_rec
-import org.jetbrains.compose.resources.painterResource
+import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -52,7 +49,7 @@ fun UserStartupPage() {
                                 fontFamily = FontLibrary.ebGaramond(),
                             )
                         ) {
-                            append("synapse ")
+                            append("synapsess ")
                         }
                         withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
                             append("ai")
@@ -86,43 +83,11 @@ fun UserStartupPage() {
                 }
             }
         }
-//        Box(Modifier.align(Alignment.BottomEnd)) {
-//            Image(
-//                painter = painterResource(
-//                    resource = Res.drawable.ic_dino_corner_sq,
-//                ),
-//                contentDescription = "Corner logo for the ",
-//                contentScale = ContentScale.FillWidth,
-//                modifier = Modifier.fillMaxWidth(0.7f)
-//            )
-//        }
         Box(
             Modifier.align(Alignment.BottomCenter)
                 .navigationBarsPadding()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(
-                        resource = Res.drawable.ic_alwinsden_black_rec
-                    ),
-                    contentDescription = "AlwinsDen logo",
-                    Modifier.width(40.dp)
-                )
-                Text(
-                    text = "alwinsden.com",
-                    style = defaultFontStyle(
-                        DefaultFontStylesDataClass(
-                            fontFamily = FontLibrary.ebGaramond(),
-                            fontSize = 18.sp,
-                        )
-                    ),
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
+            AlwinsDenIcon()
         }
-
-        //ErrorPopUp("lorem aisji  oajsid asiodio  asdjaijir˳")
     }
 }
