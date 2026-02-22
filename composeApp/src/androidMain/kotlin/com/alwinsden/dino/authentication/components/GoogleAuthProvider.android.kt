@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.credentials.*
 import androidx.credentials.exceptions.GetCredentialException
-import com.alwinsden.dino.BuildKonfig
+import com.alwinsden.dino.requestManager.buildConfigSecrets
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -26,7 +26,7 @@ class AndroidGoogleAuthProvider(
     override suspend fun signIn(nonce: String): Result<String> {
         return try {
             val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(
-                serverClientId = BuildKonfig.CLIENT_ID_GOOGLE_AUTH
+                serverClientId = buildConfigSecrets.sharedClientGoogleId
             )
                 .setNonce(nonce)
                 .build()
@@ -53,7 +53,7 @@ class AndroidGoogleAuthProvider(
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(true)
                 .setAutoSelectEnabled(true)
-                .setServerClientId(BuildKonfig.CLIENT_ID_GOOGLE_AUTH)
+                .setServerClientId(buildConfigSecrets.sharedClientGoogleId)
                 .setNonce(nonce)
                 .build()
 

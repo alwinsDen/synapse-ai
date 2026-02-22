@@ -20,11 +20,15 @@ import androidx.compose.ui.unit.sp
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
+import com.alwinsden.dino.requestManager.ClientKtorConfiguration
 import com.alwinsden.dino.requestManager.RequestManager
 import com.alwinsden.dino.requestManager.createNonce
 import com.alwinsden.dino.requestManager.utils.handleReceivedGoogleTokenId
 import com.alwinsden.dino.startup.components.UiConfirmModal
-import com.alwinsden.dino.utilities.UI.*
+import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
+import com.alwinsden.dino.utilities.UI.Defaults
+import com.alwinsden.dino.utilities.UI.FontLibrary
+import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
