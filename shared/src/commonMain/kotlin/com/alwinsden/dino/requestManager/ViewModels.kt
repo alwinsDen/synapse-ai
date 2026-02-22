@@ -13,7 +13,7 @@ class StartUpLaunchViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-//            _nonce.value = RequestManager(ClientKtorConfiguration()).createNonce()
+            _nonce.value = RequestManager().createNonce()
         }
     }
 }

@@ -17,16 +17,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
-import com.alwinsden.dino.requestManager.ClientKtorConfiguration
-import com.alwinsden.dino.requestManager.RequestManager
-import com.alwinsden.dino.requestManager.createNonce
+import com.alwinsden.dino.requestManager.StartUpLaunchViewModel
 import com.alwinsden.dino.requestManager.utils.handleReceivedGoogleTokenId
 import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
-import com.alwinsden.dino.utilities.UI.Defaults
 import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
@@ -36,14 +34,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun UserStartupPage() {
-    var nonce by remember { mutableStateOf(Defaults.default) }
-    var scope = rememberCoroutineScope()
+    val vm = viewModel { StartUpLaunchViewModel() }
+    val scope = rememberCoroutineScope()
     val authProvider = rememberGoogleAuthProvider()
-    var logoutModalState = remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        //nonce is fetched from the requested server.
-        nonce = RequestManager(ClientKtorConfiguration()).createNonce()
-    }
+    val logoutModalState = remember { mutableStateOf(false) }
+    val nonce = vm.nonce.collectAsState()
     Box(
         modifier = Modifier
             .background(Color(0xffF3DB00))
@@ -115,11 +110,11 @@ fun UserStartupPage() {
                         )
                     )
                     Spacer(modifier = Modifier.height(3.dp))
-                    ClickableContinueWithGoogle(nonce, handleReceivedGoogleTokenId = { googleTokenId ->
+                    ClickableContinueWithGoogle(nonce.value, handleReceivedGoogleTokenId = { googleTokenId ->
                         handleReceivedGoogleTokenId(googleTokenId)
                     })
                     Spacer(modifier = Modifier.height(5.dp))
-                    ClickableContinueWithApple(nonce)
+                    ClickableContinueWithApple(nonce.value)
                 }
             }
         }

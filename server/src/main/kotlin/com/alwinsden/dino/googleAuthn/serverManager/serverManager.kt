@@ -34,28 +34,27 @@ fun ApplicationCall.verifyGoogleToken(mobileGoogleIdToken: String) {
     try {
         idToken = verifier.verify(mobileGoogleIdToken)
         payload = idToken.payload
-        CoroutineScope(Dispatchers.IO).launch {
-            UserInfoDbActions().createNewUser(
-                UserInfoDataClass(
-                    googleSubjectId = payload.subject,
-                    userFullName = payload["name"] as String,
-                    userEmail = payload.email,
-                    userGoogleProfile = payload["picture"] as String
-                )
-            )
-        }
     } catch (e: Exception) {
         throw CustomInAppException(
             appCode = 1001,
             incomingErrorMessage = e.message
         )
     }
-
     val cachedNonce = ValkeyManager.getClient().get(gs(payload?.nonce)).get()
     if (cachedNonce == null) {
         throw CustomInAppException(appCode = 1000)
     } else {
         application.log.debug("Verified")
+    }
+    CoroutineScope(Dispatchers.IO).launch {
+        UserInfoDbActions().createNewUser(
+            UserInfoDataClass(
+                googleSubjectId = payload.subject,
+                userFullName = payload["name"] as String,
+                userEmail = payload.email,
+                userGoogleProfile = payload["picture"] as String
+            )
+        )
     }
 }
 
