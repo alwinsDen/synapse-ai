@@ -33,7 +33,8 @@ fun HistoryDrawer(
             ModalDrawerSheet(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
+                drawerContainerColor = Color(0xffffffff),
             ) {
                 Column(
                     modifier = Modifier
