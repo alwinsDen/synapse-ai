@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.ktor)
@@ -13,6 +15,13 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 val valkeyVersion = "1.0.0"
+
+kotlin {
+    jvmToolchain(25)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_25)
+    }
+}
 
 dependencies {
     implementation(projects.shared)

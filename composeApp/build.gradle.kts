@@ -10,6 +10,7 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain(25)
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -26,7 +27,11 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm() {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+    }
 
     sourceSets {
         androidMain.dependencies {

@@ -10,6 +10,7 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain(25)
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -19,7 +20,11 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    jvm()
+    jvm() {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+    }
 
 
     cocoapods {
