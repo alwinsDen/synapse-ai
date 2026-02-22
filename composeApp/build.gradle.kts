@@ -34,7 +34,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.services.auth)
-            implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+            implementation(libs.googleid)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

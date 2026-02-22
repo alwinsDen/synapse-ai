@@ -1,9 +1,9 @@
 [versions]
-agp = "8.12.0"
+agp = "8.12.3"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
-androidx-activity = "1.12.2"
+androidx-activity = "1.12.4"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
 androidx-espresso = "3.7.0"
@@ -13,19 +13,20 @@ composeHotReload = "1.0.0"
 composeMultiplatform = "1.9.3"
 credentialVersion = "1.6.0-rc01"
 googleApiClient = "2.8.1"
+googleid = "1.2.0"
 junit = "4.13.2"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 kotlinx-coroutines = "1.10.2"
-ktor = "3.3.3"
+ktor = "3.4.0"
 lifecycleViewmodel = "2.10.0"
-logback = "1.5.22"
+logback = "1.5.32"
 buildKonfig = "0.17.1"
 materialIconsCore = "1.7.8"
 materialIconsCoreVersion = "1.7.3"
-navigationCompose = "2.9.1"
+navigationCompose = "2.9.2"
 nettyCodecProtobuf = "4.2.9.Final"
-postgresql = "42.7.9"
-valkeyGlide = "2.2.5"
+postgresql = "42.7.10"
+valkeyGlide = "2.2.7"
 exposed = "1.0.0"
 h2 = "2.4.240"
 
@@ -36,6 +37,7 @@ androidx-credentials-play-services-auth = { module = "androidx.credentials:crede
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "googleApiClient" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
