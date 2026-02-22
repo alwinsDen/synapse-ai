@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.alwinsden.dino.navigation.SettingsNavigation
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
@@ -22,7 +24,8 @@ import com.alwinsden.dino.utilities.UI.defaultFontStyle
 fun HistoryDrawer(
     innerContent: @Composable () -> Unit,
     rememberDrawerState: DrawerState,
-    historyArray: Sequence<String>
+    historyArray: Sequence<String>,
+    navigationController: NavController? = null
 ) {
     ModalNavigationDrawer(
         drawerState = rememberDrawerState,
@@ -117,7 +120,9 @@ fun HistoryDrawer(
                                         )
                                 )
                             }
-                            IconButton(onClick = { }) {
+                            IconButton(onClick = {
+                                navigationController?.navigate(SettingsNavigation)
+                            }) {
                                 Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
                             }
                         }

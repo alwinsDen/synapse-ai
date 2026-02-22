@@ -14,7 +14,7 @@ object NavigationController {
     @Composable
     fun NavRoutes() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = LoginWindow) {
+        NavHost(navController = navController, startDestination = BotChatWindow) {
             composable<LoginWindow> {
                 UserStartupPage()
             }
@@ -22,10 +22,10 @@ object NavigationController {
                 BotInterface()
             }
             composable<BotChatWindow> {
-                BotChatInterface()
+                BotChatInterface(navController = navController)
             }
             composable<SettingsNavigation> {
-                SettingsInterface()
+                SettingsInterface(navController = navController)
             }
         }
     }

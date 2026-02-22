@@ -18,6 +18,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
@@ -33,7 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-fun UserStartupPage() {
+fun UserStartupPage(navController: NavController? = null) {
     val vm = viewModel { StartUpLaunchViewModel() }
     val scope = rememberCoroutineScope()
     val authProvider = rememberGoogleAuthProvider()

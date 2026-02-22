@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.botInterface.components.InitializedUiState
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
@@ -20,7 +21,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 * */
 @Preview(showBackground = true)
 @Composable
-fun BotInterface(mode: String? = null) {
+fun BotInterface(navController: NavController? = null, mode: String? = null) {
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
         Box(
             modifier = Modifier

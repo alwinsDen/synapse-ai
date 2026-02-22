@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.alwinsden.dino.botChatInterface.components.AiUpdatedField
 import com.alwinsden.dino.botChatInterface.components.UserCreatedField
 import com.alwinsden.dino.botChatInterface.previews.chat_samples_BotChatInterface
@@ -73,12 +74,13 @@ import kotlinx.coroutines.launch
  * @see AiUpdatedField for AI response bubble styling
  */
 @Composable
-fun BotChatInterface() {
+fun BotChatInterface(navController: NavController? = null) {
     val verticalScrollState = rememberScrollState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     HistoryDrawer(
-        {
+        navigationController = navController,
+        innerContent = {
             BoxWithConstraints(
                 modifier = Modifier
                     .statusBarsPadding()
