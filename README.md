@@ -14,7 +14,7 @@ This project uses [`AGENTS.md`](./AGENTS.md) as the single source of truth for a
 | <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 37" src="https://github.com/user-attachments/assets/4675005b-9898-44e4-9d0f-ddbb7d97ac13" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 09 36 55" src="https://github.com/user-attachments/assets/784ec2f7-8bdf-456b-b684-dc8bbfcea4fc" /> | <img width="342" height="796" alt="Screenshot 2026-02-18 at 23 56 33" src="https://github.com/user-attachments/assets/f142e31b-49b9-42ad-b596-87b6ce7ba341" /> | <img width="342" height="796" alt="image" src="https://github.com/user-attachments/assets/df13e565-1983-43f8-8386-7fe745e883f4" /> |
 
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
-iOS) with a Ktor backend.
+iOS) with a Go backend.
 
 **Author**: [alwinsDen.com](https://alwinsden.com)
 
@@ -30,7 +30,7 @@ experiences.
 - **Cross-Platform**: Single codebase for Android and iOS using Compose Multiplatform
 - **Secure Authentication**: Google Sign-In with nonce-based security
 - **Rich Chat Interface**: Clean, Material 3 design with smooth interactions
-- **Fast Backend**: Ktor-powered server with Valkey caching
+- **Fast Backend**: Go server (net/http) with Valkey caching
 - **Real-time Sync**: Efficient HTTP-based communication
 
 ## Technology Stack
@@ -44,10 +44,9 @@ experiences.
 
 ### Backend
 
-- **Ktor Server (v3.3.3)**: Lightweight, asynchronous server
-- **Valkey/Glide (v2.2.5)**: Redis-compatible caching for sessions
-- **Exposed (v1.0.0)**: Kotlin SQL framework for database access.
-- **H2 (v2.4.240)**: In-memory SQL database.
+- **Go (1.23+)**: Server using stdlib `net/http`, no framework
+- **go-redis/v9**: Valkey/Redis client for session caching
+- **google.golang.org/api/idtoken**: Google ID token verification
 - **Google Sign-In API**: OAuth 2.0 authentication
 
 ### Build Tools
@@ -62,6 +61,7 @@ experiences.
 - **Android Studio** (for Android development)
 - **Xcode 14+** (for iOS development, macOS only)
 - **CocoaPods** (for iOS dependencies)
+- **Go 1.23+** (for backend development)
 - **Valkey/Redis** server (for backend caching)
 
 ## Project Structure
@@ -76,7 +76,9 @@ Project-Synapse/
 │   ├── androidMain/     # Android platform implementations
 │   ├── iosMain/         # iOS platform implementations
 │   └── commonMain/      # Shared business logic
-├── server/              # Ktor backend
+├── server/              # Go backend (net/http)
+│   ├── cmd/api/         # Entry point
+│   └── internal/        # Config, cache, auth, handlers
 └── iosApp/              # iOS app wrapper
 ```
 
@@ -113,10 +115,17 @@ Required keys:
 ### 4. Start the Backend Server
 
 ```bash
-./gradlew :server:run
+cp server/.env.example server/.env
+# Edit server/.env with your credentials
+make -C server run
 ```
 
-Server starts on `http://127.0.0.1:5432` by default.
+Or with Docker:
+```bash
+cd server && docker-compose up
+```
+
+Server starts on `http://localhost:3001` by default.
 
 ### 5. Build Mobile Apps
 
@@ -142,7 +151,7 @@ cd iosApp && pod install && cd ..
 |---------------|------------------------------------------------------------|
 | Android APK   | `./gradlew :composeApp:assembleDebug`                      |
 | iOS Framework | `./gradlew :composeApp:embedAndSignAppleFrameworkForXcode` |
-| Server        | `./gradlew :server:run`                                    |
+| Server        | `make -C server run`                                       |
 
 ### Testing
 
@@ -153,7 +162,9 @@ cd iosApp && pod install && cd ..
 # Module-specific tests
 ./gradlew :composeApp:test
 ./gradlew :shared:test
-./gradlew :server:test
+
+# Go server tests
+make -C server test
 ```
 
 ### Clean Build
@@ -180,15 +191,8 @@ cd iosApp && pod install && cd ..
          ▼
 ┌─────────────────┐     ┌─────────────┐
 │   server        │◄───►│   Valkey    │
-│  (Ktor Backend) │     │   (Cache)   │
-└───────┬─────────┘     └─────────────┘
-        │
-        │ SQL
-        ▼
-┌─────────────────┐
-│   H2/Postgres   │
-│   (Database)    │
-└─────────────────┘
+│   (Go Backend)  │     │   (Cache)   │
+└─────────────────┘     └─────────────┘
 ```
 
 ### Key Components
@@ -213,12 +217,6 @@ cd iosApp && pod install && cd ..
 - Platform-specific engines: OkHttp (Android), Darwin (iOS)
 - Extension functions for type-safe API calls
 
-**Database**
-
-- **Exposed**: Kotlin-idiomatic SQL framework for database interactions.
-- **H2**: Used as an in-memory database for development and testing.
-- The server uses the database for persisting chat history and user data.
-
 ## Development Workflow
 
 ### Adding New Screens
@@ -229,9 +227,10 @@ cd iosApp && pod install && cd ..
 
 ### Adding Server Endpoints
 
-1. Define route in `server/src/main/kotlin/com/alwinsden/dino/KtorStart.kt`
-2. Add extension function in `shared/.../requestManager/`
-3. Call from client using `RequestManager`
+1. Create a new handler in `server/internal/handlers/`
+2. Register the route in `server/cmd/api/main.go`
+3. Add extension function in `shared/.../requestManager/`
+4. Call from client using `RequestManager`
 
 ### Platform-Specific Code
 
@@ -261,13 +260,6 @@ actual fun platformSpecificFunction() = "iOS"
 - **Android Emulator**: Use `10.0.2.2` instead of `localhost`
 - **iOS Simulator**: Use `localhost` or `127.0.0.1`
 - Ensure server is running before testing
-
-### Valkey Platform Compatibility
-
-Current config uses macOS ARM64. For other platforms, update `server/build.gradle.kts`:
-
-- Linux x64: `linux-x86_64`
-- Windows x64: `windows-x86_64`
 
 ## Contributing
 

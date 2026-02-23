@@ -26,3 +26,8 @@ xcuserdata/
 iosApp/Configuration/Google.xcconfig
 /glide-logs
 CLAUDE.md
+
+# Go server
+server/.env
+server/bin/
+server/*.out

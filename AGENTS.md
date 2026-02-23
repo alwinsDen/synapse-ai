@@ -25,4 +25,20 @@ this repository.
 
 ### Structure
 
-The KTOR server module lies in :server module
+The Go server lives in the `server/` directory at the repo root. It uses stdlib `net/http` with no HTTP framework. Key layout:
+
+```
+server/
+├── cmd/api/main.go          # Entry point
+├── internal/
+│   ├── config/config.go     # Env var config
+│   ├── cache/valkey.go      # Redis/Valkey client
+│   ├── auth/google.go       # Google ID token verification
+│   ├── middleware/cors.go   # CORS middleware
+│   └── handlers/            # HTTP handlers (health, nonce, login)
+├── Dockerfile
+├── docker-compose.yml
+└── Makefile
+```
+
+Run locally: `make -C server run` or `cd server && go run ./cmd/api`
