@@ -6,16 +6,18 @@ meta {
 
 post {
   url: http://localhost:3001/login
-  body: text
+  body: json
   auth: inherit
 }
 
 headers {
-  Content-Type: text/plain
+  Content-Type: application/json
 }
 
-body:text {
-  token
+body:json {
+  {
+    "token": "<token>"
+  }
 }
 
 settings {

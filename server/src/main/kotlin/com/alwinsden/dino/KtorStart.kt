@@ -1,10 +1,14 @@
 package com.alwinsden.dino
 
+import com.alwinsden.dino.googleAuthn.serverManager.GoogleAuthService
 import com.alwinsden.dino.googleAuthn.serverManager.nonceGenerator
 import com.alwinsden.dino.googleAuthn.serverManager.tables.UserInfo
 import com.alwinsden.dino.googleAuthn.serverManager.verifyGoogleToken
+import com.alwinsden.dino.requestManager.Ktor.LoginRequest
+import com.alwinsden.dino.requestManager.Ktor.LoginResponse
 import com.alwinsden.dino.requestManager.utils.CustomInAppException
 import com.alwinsden.dino.requestManager.utils.ErrorObjectCustom
+import com.alwinsden.dino.requestManager.utils.ErrorString
 import com.alwinsden.dino.requestManager.utils.ErrorTypeEnums
 import com.alwinsden.dino.valkeyManager.ValkeyManager
 import io.ktor.http.*
@@ -54,8 +58,12 @@ fun Application.module() {
     install(StatusPages) {
         //in-app custom error handler
         exception<CustomInAppException> { call, cause ->
+            val httpStatus = when (cause.appCode) {
+                1000 -> HttpStatusCode.Unauthorized
+                else -> HttpStatusCode.BadRequest
+            }
             call.respond(
-                HttpStatusCode.BadRequest,
+                httpStatus,
                 ErrorObjectCustom(
                     errorCode = cause.appCode,
                     errorType = ErrorTypeEnums.CUSTOM.name,
@@ -103,8 +111,13 @@ fun Application.module() {
         try {
             val applicationEnv: ApplicationEnvironment = environment
             ValkeyManager.apply { initValkey(applicationEnv) }
+            GoogleAuthService.init(
+                googleAudience = environment.config
+                    .property("dinoBackend.googleAuth.GOOGLE_AUDIENCE")
+                    .getString()
+            )
         } catch (e: Exception) {
-            log.error("Failed to initialize ValkeyManager")
+            log.error("Failed to initialize services at startup")
             e.printStackTrace()
         }
     }
@@ -123,9 +136,10 @@ fun Application.module() {
 
         //g-auth google verify
         post("/login") {
-            val text = call.receiveText()
-            call.verifyGoogleToken(text)
-            call.respondText("return JTW token here")//TODO
+            val request = call.receive<LoginRequest>()
+            val result = call.verifyGoogleToken(request.token)
+            val status = if (result.userCreated) "user created" else "user already exists"
+            call.respond(HttpStatusCode.OK, LoginResponse(status))
         }
     }
 }

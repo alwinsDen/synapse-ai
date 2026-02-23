@@ -14,7 +14,7 @@ object NavigationController {
     @Composable
     fun NavRoutes() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = BotChatWindow) {
+        NavHost(navController = navController, startDestination = LoginWindow) {
             composable<LoginWindow> {
                 UserStartupPage()
             }
