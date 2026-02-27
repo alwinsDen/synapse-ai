@@ -1,19 +1,19 @@
-.PHONY: run build test docker-up docker-down tidy
+.PHONY: run build test tidy docker-up docker-down
 
 run:
-	cd server && go run ./cmd/api
+	go run ./server/cmd/api
 
 build:
-	cd server && go build -o bin/api ./cmd/api
+	go build -o bin/api ./server/cmd/api
 
 test:
-	cd server && go test ./...
+	go test ./server/...
 
 tidy:
-	cd server && go mod tidy
+	go mod tidy
 
 docker-up:
-	cd server && docker-compose up --build
+	docker-compose up --build
 
 docker-down:
-	cd server && docker-compose down
+	docker-compose down

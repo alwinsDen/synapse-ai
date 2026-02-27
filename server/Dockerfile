@@ -5,8 +5,8 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . .
-RUN go build -o bin/api ./cmd/api
+COPY server/ ./server/
+RUN go build -o bin/api ./server/cmd/api
 
 FROM alpine:latest
 

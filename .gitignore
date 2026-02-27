@@ -28,6 +28,7 @@ iosApp/Configuration/Google.xcconfig
 CLAUDE.md
 
 # Go server
-server/.env
-server/bin/
-server/*.out
+.env
+bin/
+*.out
+server/tmp
