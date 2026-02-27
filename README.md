@@ -8,22 +8,6 @@ This project uses [`AGENTS.md`](./AGENTS.md) as the single source of truth for a
 
 ---
 
-### Compose iOS screenshots
-<table>
-  <tr>
-    <th width="25%">login</th>
-    <th width="25%">new conversation</th>
-    <th width="25%">interface</th>
-    <th width="25%">past conversations</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/4675005b-9898-44e4-9d0f-ddbb7d97ac13" alt="login" /></td>
-    <td><img src="https://github.com/user-attachments/assets/784ec2f7-8bdf-456b-b684-dc8bbfcea4fc" alt="new conversation" /></td>
-    <td><img src="https://github.com/user-attachments/assets/f142e31b-49b9-42ad-b596-87b6ce7ba341" alt="interface" /></td>
-    <td><img src="https://github.com/user-attachments/assets/df13e565-1983-43f8-8386-7fe745e883f4" alt="past conversations" /></td>
-  </tr>
-</table>
-
 A Kotlin Multiplatform application for conversing with AI models, featuring cross-platform mobile support (Android &
 iOS) with a Go backend.
 
