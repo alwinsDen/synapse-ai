@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	"github.com/alwinsden/synapse-ai/server/internal/handlers"
 	"github.com/alwinsden/synapse-ai/server/internal/middleware"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -22,14 +24,31 @@ func main() {
 	cfgPort := os.Getenv("PORT")
 	cfgValkey := os.Getenv("VALKEY_ADDR")
 	cfgGClient := os.Getenv("GOOGLE_CLIENT_ID")
+	cfgPgClient := os.Getenv("PG_CLIENT")
+	cfgDbName := os.Getenv("PG_DATABASE")
+	cfgPswd := os.Getenv("PG_PSWD")
+
+	/*start postgres connection*/
+	dsn := fmt.Sprintf("user=%s dbname=%s password=%s", cfgPgClient, cfgDbName, cfgPswd)
+	db, err := sql.Open("postgres", dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
 	valkey := cache.New(cfgValkey)
 	defer valkey.Close()
 
+	h := &handlers.Handler{
+		Valkey:         valkey,
+		GoogleClientId: cfgGClient,
+		PsqlDb:         db,
+	}
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("/health", handlers.Health)
-	mux.HandleFunc("/generate-nonce", handlers.GenerateNonce(valkey))
-	mux.HandleFunc("/login", handlers.Login(valkey, cfgGClient))
+	mux.HandleFunc("/health", h.Health)
+	mux.HandleFunc("/generate-nonce", h.GenerateNonce)
+	mux.HandleFunc("/login", h.Login)
 
 	handler := middleware.CORS(mux)
 
