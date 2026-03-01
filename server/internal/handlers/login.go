@@ -35,7 +35,10 @@ func Login(valkey *cache.Valkey, clientID string) http.HandlerFunc {
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadRequest)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid request"})
+			err := json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid request"})
+			if err != nil {
+				return
+			}
 			return
 		}
 
@@ -46,13 +49,19 @@ func Login(valkey *cache.Valkey, clientID string) http.HandlerFunc {
 		if err == redis.Nil {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid or expired nonce"})
+			err := json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid or expired nonce"})
+			if err != nil {
+				return
+			}
 			return
 		}
 		if err != nil {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Cache error"})
+			err := json.NewEncoder(w).Encode(ErrorResponse{Error: "Cache error"})
+			if err != nil {
+				return
+			}
 			return
 		}
 
@@ -60,7 +69,10 @@ func Login(valkey *cache.Valkey, clientID string) http.HandlerFunc {
 		if err != nil || !valid {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid token"})
+			err := json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid token"})
+			if err != nil {
+				return
+			}
 			return
 		}
 
@@ -68,6 +80,9 @@ func Login(valkey *cache.Valkey, clientID string) http.HandlerFunc {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(LoginResponse{Status: "ok"})
+		err = json.NewEncoder(w).Encode(LoginResponse{Status: "ok"})
+		if err != nil {
+			return
+		}
 	}
 }

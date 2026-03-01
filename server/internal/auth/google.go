@@ -16,5 +16,7 @@ func VerifyGoogleIDToken(ctx context.Context, token string, clientID string) (bo
 		return false, nil
 	}
 
+	println(payload.Claims["email"].(string))
+
 	return true, nil
 }

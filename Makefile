@@ -17,3 +17,5 @@ docker-up:
 
 docker-down:
 	docker-compose down
+run-air:
+	air
