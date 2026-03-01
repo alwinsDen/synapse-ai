@@ -1,17 +1,18 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/alwinsden/synapse-ai/server/internal/auth/table"
 	"github.com/alwinsden/synapse-ai/server/internal/cache"
 	"github.com/alwinsden/synapse-ai/server/internal/handlers"
 	"github.com/alwinsden/synapse-ai/server/internal/middleware"
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -21,20 +22,39 @@ func main() {
 	}
 
 	//configure secret keys
-	cfgPort := os.Getenv("PORT")
-	cfgValkey := os.Getenv("VALKEY_ADDR")
-	cfgGClient := os.Getenv("GOOGLE_CLIENT_ID")
-	cfgPgClient := os.Getenv("PG_CLIENT")
-	cfgDbName := os.Getenv("PG_DATABASE")
-	cfgPswd := os.Getenv("PG_PSWD")
+	var (
+		cfgPort      = os.Getenv("PORT")
+		cfgValkey    = os.Getenv("VALKEY_ADDR")
+		cfgGClient   = os.Getenv("GOOGLE_CLIENT_ID")
+		psqlHost     = os.Getenv("PG_HOST")
+		psqlUserName = os.Getenv("PG_USERNAME")
+		psqlDbName   = os.Getenv("PG_DATABASE")
+		psqlPassword = os.Getenv("PG_PASSWORD")
+		psqlPort     = os.Getenv("PG_PORT")
+	)
 
-	/*start postgres connection*/
-	dsn := fmt.Sprintf("user=%s dbname=%s password=%s", cfgPgClient, cfgDbName, cfgPswd)
-	db, err := sql.Open("postgres", dsn)
+	postgresDsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		psqlHost,
+		psqlUserName,
+		psqlPassword,
+		psqlDbName,
+		psqlPort,
+	)
+
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  postgresDsn,
+		PreferSimpleProtocol: true,
+	}))
+
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+
+	/*migrations*/
+	err = db.AutoMigrate(auth.UserInfo{})
+	if err != nil {
+		log.Fatalf("Failed to run some migrations: %s", err)
+	}
 
 	valkey := cache.New(cfgValkey)
 	defer valkey.Close()

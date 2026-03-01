@@ -63,7 +63,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	valid, err := auth.VerifyGoogleIDToken(ctx, req.Token, h.GoogleClientId)
+	valid, err := auth.VerifyGoogleIDToken(ctx, req.Token, h.GoogleClientId, h.PsqlDb)
 	if err != nil || !valid {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusUnauthorized)

@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	"database/sql"
-
 	"github.com/alwinsden/synapse-ai/server/internal/cache"
+	"gorm.io/gorm"
 )
 
 type Handler struct {
 	Valkey         *cache.Valkey
 	GoogleClientId string
-	PsqlDb         *sql.DB
+	PsqlDb         *gorm.DB
 }
