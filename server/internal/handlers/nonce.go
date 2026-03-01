@@ -20,7 +20,6 @@ func GenerateNonce(valkey *cache.Valkey) http.HandlerFunc {
 			http.Error(w, "Failed to store nonce", http.StatusInternalServerError)
 			return
 		}
-		println("SERVER NONCE: ", nonce)
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(nonce))
