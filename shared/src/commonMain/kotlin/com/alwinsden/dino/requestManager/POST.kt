@@ -1,6 +1,7 @@
+package com.alwinsden.dino.requestManager
+
 import com.alwinsden.dino.requestManager.Ktor.LoginRequest
 import com.alwinsden.dino.requestManager.Ktor.LoginResponse
-import com.alwinsden.dino.requestManager.RequestManager
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*

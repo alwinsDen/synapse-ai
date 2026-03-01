@@ -6,6 +6,7 @@ type UserInfo struct {
 	gorm.Model
 	GoogleId    string `gorm:"uniqueIndex"`
 	Email       string
-	Profile     string
 	AccessState bool
+	OS          string
+	OSVersion   string
 }
