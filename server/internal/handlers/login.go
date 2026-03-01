@@ -20,7 +20,8 @@ type LoginResponse struct {
 }
 
 type ErrorResponse struct {
-	Error string `json:"error"`
+	Error   string  `json:"error"`
+	Message *string `json:"message,omitempty"`
 }
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
@@ -67,8 +68,13 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil || !valid {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusUnauthorized)
-		err := json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid token"})
+		var errMsg *string
 		if err != nil {
+			msg := err.Error()
+			errMsg = &msg
+		}
+		encErr := json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid token", Message: errMsg})
+		if encErr != nil {
 			return
 		}
 		return

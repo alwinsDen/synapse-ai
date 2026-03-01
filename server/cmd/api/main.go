@@ -16,21 +16,21 @@ import (
 )
 
 func main() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load("secret.properties")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
 	//configure secret keys
 	var (
-		cfgPort      = os.Getenv("PORT")
-		cfgValkey    = os.Getenv("VALKEY_ADDR")
-		cfgGClient   = os.Getenv("GOOGLE_CLIENT_ID")
-		psqlHost     = os.Getenv("PG_HOST")
-		psqlUserName = os.Getenv("PG_USERNAME")
-		psqlDbName   = os.Getenv("PG_DATABASE")
-		psqlPassword = os.Getenv("PG_PASSWORD")
-		psqlPort     = os.Getenv("PG_PORT")
+		cfgPort      = os.Getenv("GO_PORT")
+		cfgValkey    = os.Getenv("GO_VALKEY_ADDR")
+		cfgGClient   = os.Getenv("CLIENT_ID_GOOGLE_AUTH")
+		psqlHost     = os.Getenv("GO_PG_HOST")
+		psqlUserName = os.Getenv("GO_PG_USERNAME")
+		psqlDbName   = os.Getenv("GO_PG_DATABASE")
+		psqlPassword = os.Getenv("GO_PG_PASSWORD")
+		psqlPort     = os.Getenv("GO_PG_PORT")
 	)
 
 	postgresDsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
