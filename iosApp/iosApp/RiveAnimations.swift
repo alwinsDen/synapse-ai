@@ -9,19 +9,26 @@ import SwiftUI
 
 @_spi(RiveExperimental) import RiveRuntime
 
-struct MartyView: View {
+struct BasicRiveView: View {
+    let backgroundColor : SwiftUI.Color
+    let animatedFileSource : String
     var body: some View {
         AsyncRiveUIViewRepresentable {
             let worker = try await Worker()
-            let file = try await File(source: .local("marty_v2", Bundle.main), worker: worker)
+                let file = try await File(source: .local(animatedFileSource, Bundle.main), worker: worker)
             return try await Rive(file: file)
         }
+        .background(backgroundColor)
+        .ignoresSafeArea()
     }
 }
 
 
 class RiveNativeIosViewFactory : NativeViewFactory {
-    func createMartyView() -> UIViewController {
-        return UIHostingController(rootView: MartyView())
+    func createRiveView(backgroundColor: String, animatedFileSource: String) -> UIViewController {
+        let riveRuntimeBackground = Color(hex: backgroundColor)
+        let controller = UIHostingController(rootView: BasicRiveView(backgroundColor: riveRuntimeBackground, animatedFileSource: animatedFileSource))
+        controller.view.isOpaque = false
+        return controller
     }
 }

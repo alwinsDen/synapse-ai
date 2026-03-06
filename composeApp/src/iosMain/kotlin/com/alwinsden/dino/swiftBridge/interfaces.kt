@@ -10,5 +10,5 @@ interface GoogleAuthenticatorIos {
 
 
 interface NativeViewFactory {
-    fun createMartyView(): UIViewController
+    fun createRiveView(backgroundColor: String, animatedFileSource: String): UIViewController
 }

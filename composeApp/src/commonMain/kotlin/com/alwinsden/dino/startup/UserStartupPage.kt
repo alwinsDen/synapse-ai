@@ -29,7 +29,7 @@ import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
-import com.alwinsden.dino.utilities.UI.riveUtils.MartyAnimation
+import com.alwinsden.dino.utilities.UI.riveUtils.GenericRiveAnimation
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -121,16 +121,23 @@ fun UserStartupPage(navController: NavController? = null) {
                     Spacer(modifier = Modifier.height(5.dp))
                     ClickableContinueWithApple(nonce.value)
                     Spacer(Modifier.height(10.dp))
-                    Box(
-                        modifier = Modifier
-                            .width(100.dp).height(
-                                100.dp
-                            )
-                    ) {
-                        MartyAnimation(modifier = Modifier.fillMaxSize())
-                    }
+
                 }
             }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .background(color = Color.Transparent)
+                .height(150.dp)
+                .width(150.dp)
+        ) {
+            GenericRiveAnimation(modifier = Modifier.fillMaxSize()
+                .background(color = Color.Transparent),
+                riveBackgroundColor = "#F3DB00",
+                animatedFileSource = "toggle"
+            )
         }
         Box(Modifier.padding(10.dp)) {
             when (val state = googleAuthState.value) {

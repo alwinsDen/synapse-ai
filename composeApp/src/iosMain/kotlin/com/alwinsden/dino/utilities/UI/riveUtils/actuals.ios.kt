@@ -6,10 +6,10 @@ import androidx.compose.ui.viewinterop.UIKitViewController
 import com.alwinsden.dino.riveViewControllerIos
 
 @Composable
-actual fun MartyAnimation(modifier: Modifier) {
+actual fun GenericRiveAnimation(modifier: Modifier, riveBackgroundColor: String,animatedFileSource: String) {
     val factory = checkNotNull(riveViewControllerIos)
     UIKitViewController(
-        factory = {factory.createMartyView()},
+        factory = {factory.createRiveView(riveBackgroundColor, animatedFileSource) },
         modifier = modifier,
     )
 }

@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-actual fun MartyAnimation(modifier: Modifier) {
+actual fun GenericRiveAnimation(modifier: Modifier, riveBackgroundColor: String, animatedFileSource: String) {
 }
