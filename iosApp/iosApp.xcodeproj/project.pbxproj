@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED10301F2F5A8DD000C21BBC /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = ED10301E2F5A8DD000C21BBC /* RiveRuntime */; };
 		ED4A4C902F5919D100906F6E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = ED4A4C8F2F5919D100906F6E /* GoogleSignIn */; };
 		ED4A4C922F5919D100906F6E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED4A4C912F5919D100906F6E /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 			files = (
 				ED4A4C902F5919D100906F6E /* GoogleSignIn in Frameworks */,
 				ED4A4C922F5919D100906F6E /* GoogleSignInSwift in Frameworks */,
+				ED10301F2F5A8DD000C21BBC /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +123,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				ED4A4C8E2F5919D100906F6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				ED10301D2F5A8DD000C21BBC /* XCRemoteSwiftPackageReference "rive-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E0B243A2EA20CD19C5996165 /* Products */;
@@ -384,6 +387,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		ED10301D2F5A8DD000C21BBC /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.16.0;
+			};
+		};
 		ED4A4C8E2F5919D100906F6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -395,6 +406,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		ED10301E2F5A8DD000C21BBC /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ED10301D2F5A8DD000C21BBC /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
 		ED4A4C8F2F5919D100906F6E /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ED4A4C8E2F5919D100906F6E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;

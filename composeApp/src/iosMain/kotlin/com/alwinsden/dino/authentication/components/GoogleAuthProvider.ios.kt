@@ -3,6 +3,7 @@ package com.alwinsden.dino.authentication.components
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.alwinsden.dino.googleAuthenticatorIos
+import com.alwinsden.dino.swiftBridge.GoogleAuthenticatorIos
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -44,8 +45,3 @@ actual fun rememberGoogleAuthProvider(): GoogleAuthProvider {
     return remember { IOSGoogleAuthProvider(authenticator) }
 }
 
-interface GoogleAuthenticatorIos {
-    fun iosLogin(nonce: String, completion: (String?) -> Unit)
-    fun iosCheckExisting(completion: (String?) -> Unit)
-    fun iosGoogleLogout()
-}
