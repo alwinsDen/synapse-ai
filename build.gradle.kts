@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.kotlinJvm) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.ktor) apply false
-    alias(libs.plugins.kotlinCocoapods) apply false
 }
 
 // Sync AGENTS.md → CLAUDE.md during Gradle sync (cross-platform, no symlinks needed)

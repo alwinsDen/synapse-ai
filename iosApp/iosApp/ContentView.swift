@@ -4,7 +4,10 @@ import ComposeApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        let auth = NativeIosGoogleAuthentication()
+        let vc = MainViewControllerKt.MainViewController(googleAuthenticator: auth)
+        auth.viewController = vc
+        return vc
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
