@@ -51,16 +51,36 @@ fun UserStartupPage(navController: NavController? = null) {
             .fillMaxSize(),
     ) {
         Box(
-            Modifier.align(Alignment.TopEnd)
+            Modifier.align(Alignment.TopStart)
+                .fillMaxWidth()
         ) {
-            IconButton(onClick = {
-                logoutModalState.value = true
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Logout,
-                    contentDescription = ""
-                )
+            Row(
+                Modifier.fillMaxWidth()
+                    .padding(start = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.30f)
+                        .aspectRatio(150f/60f)
+                ) {
+                    GenericRiveAnimation(modifier = Modifier.fillMaxSize()
+                        .background(color = Color.Transparent),
+                        riveBackgroundColor = "#F3DB00",
+                        animatedFileSource = "toggle"
+                    )
+                }
+                IconButton(onClick = {
+                    logoutModalState.value = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = ""
+                    )
+                }
             }
+
         }
         if (logoutModalState.value) {
             UiConfirmModal("Are you sure you want to log out of Google account?", { confirmState ->
@@ -125,21 +145,8 @@ fun UserStartupPage(navController: NavController? = null) {
                 }
             }
         }
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .navigationBarsPadding()
-                .background(color = Color.Transparent)
-                .height(150.dp)
-                .width(150.dp)
-        ) {
-            GenericRiveAnimation(modifier = Modifier.fillMaxSize()
-                .background(color = Color.Transparent),
-                riveBackgroundColor = "#F3DB00",
-                animatedFileSource = "toggle"
-            )
-        }
-        Box(Modifier.padding(10.dp)) {
+
+        Box(Modifier.padding(10.dp).align(Alignment.BottomCenter)) {
             when (val state = googleAuthState.value) {
                 is LoginState.Loading -> {}
                 is LoginState.Success -> {}
