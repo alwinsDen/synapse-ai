@@ -12,15 +12,15 @@ import kotlin.coroutines.resume
 class IOSGoogleAuthProvider(private val authenticator: GoogleAuthenticatorIos) : GoogleAuthProvider {
 
     override suspend fun signIn(nonce: String): Result<String> {
-        var resultState: Result<String>? = null
-        authenticator.iosLogin(nonce = nonce, completion = { token ->
-            if (token != null) {
-                resultState = Result.success(token)
-            } else {
-                resultState = Result.failure(Exception("Sign-in cancelled or failed"))
+        return suspendCancellableCoroutine { continuation ->
+            authenticator.iosLogin(nonce = nonce) { token ->
+                if (token != null) {
+                    continuation.resume(Result.success(token))
+                } else {
+                    continuation.resume(Result.failure(Exception("Sign-in cancelled or failed")))
+                }
             }
-        })
-        return resultState ?: Result.failure(Exception("Sign-in cancelled"))
+        }
     }
 
     override suspend fun checkExistingCredentials(nonce: String): String? {

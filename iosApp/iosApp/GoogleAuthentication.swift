@@ -14,7 +14,6 @@ class NativeIosGoogleAuthentication: GoogleAuthenticatorIos {
 
     func iosLogin(nonce: String, completion: @escaping (String?)->Void ){
         guard let vc = viewController else { completion(nil); return; }
-        var resultToken: String? = nil
 
         DispatchQueue.main.async {
             GIDSignIn.sharedInstance.signIn(
@@ -23,11 +22,9 @@ class NativeIosGoogleAuthentication: GoogleAuthenticatorIos {
                 additionalScopes: nil,
                 nonce: nonce
             ) { result, error in
-                resultToken = error == nil ? result?.user.idToken?.tokenString : nil
+                completion(error == nil ? result?.user.idToken?.tokenString : nil)
             }
         }
-
-        completion(resultToken)
     }
 
     func iosCheckExisting(completion: @escaping (String?) -> Void) {

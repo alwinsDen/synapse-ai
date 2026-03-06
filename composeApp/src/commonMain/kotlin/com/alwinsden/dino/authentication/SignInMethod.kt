@@ -53,7 +53,6 @@ fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (Str
                             handleReceivedGoogleTokenId(token)
                         }
                         .onFailure { exception ->
-                            // TODO: Handle error properly
                             println("Sign-in failed: ${exception.message}")
                         }
                     loaderState = false
