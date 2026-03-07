@@ -26,6 +26,8 @@ materialIconsCoreVersion = "1.7.3"
 navigationCompose = "2.9.2"
 nettyCodecProtobuf = "4.2.9.Final"
 postgresql = "42.7.10"
+riveAndroid = "11.2.1"
+startupRuntime = "1.2.0"
 valkeyGlide = "2.2.7"
 exposed = "1.0.0"
 h2 = "2.4.240"
@@ -36,6 +38,7 @@ androidx-credentials = { module = "androidx.credentials:credentials", version.re
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialVersion" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "googleApiClient" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -64,6 +67,7 @@ material-icons-extended = { module = "org.jetbrains.compose.material:material-ic
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 netty-codec-protobuf = { module = "io.netty:netty-codec-protobuf", version.ref = "nettyCodecProtobuf" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+rive-android = { module = "app.rive:rive-android", version.ref = "riveAndroid" }
 valkey-glide = { group = "io.valkey", name = "valkey-glide", version.ref = "valkeyGlide" }
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }

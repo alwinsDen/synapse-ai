@@ -56,10 +56,18 @@ fun UserStartupPage(navController: NavController? = null) {
         ) {
             Row(
                 Modifier.fillMaxWidth()
-                    .padding(start = 10.dp),
+                    .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
+                IconButton(onClick = {
+                    logoutModalState.value = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = ""
+                    )
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(.30f)
@@ -69,14 +77,6 @@ fun UserStartupPage(navController: NavController? = null) {
                         .background(color = Color.Transparent),
                         riveBackgroundColor = "#F3DB00",
                         animatedFileSource = "toggle"
-                    )
-                }
-                IconButton(onClick = {
-                    logoutModalState.value = true
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Logout,
-                        contentDescription = ""
                     )
                 }
             }
