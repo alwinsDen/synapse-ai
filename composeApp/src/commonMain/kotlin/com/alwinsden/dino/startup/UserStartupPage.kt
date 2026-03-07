@@ -97,51 +97,50 @@ fun UserStartupPage(navController: NavController? = null) {
             })
         }
         Box(Modifier.align(Alignment.Center)) {
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            SpanStyle(
-                                fontFamily = FontLibrary.ebGaramond(),
-                            )
-                        ) {
-                            append("synapse ")
-                        }
-                        withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
-                            append("ai")
-                        }
-                    },
-                    fontSize = 45.sp,
-                    textAlign = TextAlign.Center,
-                )
-            }
-            Box(
-                Modifier.align(Alignment.Center)
-            ) {
-                Column {
-                    Spacer(Modifier.height(65.dp))
+                Row(
+                ) {
                     Text(
-                        "continue with",
-                        style = defaultFontStyle(
-                            DefaultFontStylesDataClass(
-                                fontSize = 18.sp,
-                                colorInt = 0xff000000,
-                                fontFamily = FontLibrary.ebGaramond()
-                            )
+                        text = buildAnnotatedString {
+                            withStyle(
+                                SpanStyle(
+                                    fontFamily = FontLibrary.ebGaramond(),
+                                )
+                            ) {
+                                append("synapse ")
+                            }
+                            withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                                append("ai")
+                            }
+                        },
+                        fontSize = 45.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+                Text(
+                    "continue with",
+                    style = defaultFontStyle(
+                        DefaultFontStylesDataClass(
+                            fontSize = 18.sp,
+                            colorInt = 0xff000000,
+                            fontFamily = FontLibrary.ebGaramond()
                         )
                     )
-                    Spacer(modifier = Modifier.height(3.dp))
+                )
+                Spacer(Modifier.height(5.dp))
+                Row(
+                    modifier = Modifier,
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ){
                     ClickableContinueWithGoogle(nonce.value, handleReceivedGoogleTokenId = { googleTokenId ->
                         googleLoginViewModel.login(googleTokenId, nonce.value)
                     })
-                    Spacer(modifier = Modifier.height(5.dp))
                     ClickableContinueWithApple(nonce.value)
-                    Spacer(Modifier.height(10.dp))
-
                 }
             }
         }

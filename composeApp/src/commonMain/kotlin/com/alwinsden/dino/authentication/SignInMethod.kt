@@ -2,16 +2,22 @@ package com.alwinsden.dino.authentication
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import com.alwinsden.dino.authentication.components.rememberAppleAuthProvider
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
 import com.alwinsden.dino.utilities.UI.Defaults
 import com.alwinsden.dino.utilities.UI.DialogLoader
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.btn_android_id_rec
+import dino.composeapp.generated.resources.android_light_sq_na_4x
+import dino.composeapp.generated.resources.appleid_button_4x
 import dino.composeapp.generated.resources.btn_apple_id_rec
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -40,10 +46,9 @@ fun ClickableContinueWithGoogle(nonce: String, handleReceivedGoogleTokenId: (Str
     }
 
     Image(
-        painter = painterResource(Res.drawable.btn_android_id_rec),
+        painter = painterResource(Res.drawable.android_light_sq_na_4x),
         contentDescription = "Continue with Google",
-        contentScale = ContentScale.FillWidth,
-        modifier = Modifier.fillMaxWidth(.5f)
+        modifier = Modifier.height(48.dp).width(48.dp)
             .clickable {
                 scope.launch {
                     if (nonce == Defaults.default) return@launch
@@ -70,9 +75,10 @@ fun ClickableContinueWithApple(nonce: String) {
         return
     }
     Image(
-        painter = painterResource(resource = Res.drawable.btn_apple_id_rec),
+        painter = painterResource(resource = Res.drawable.appleid_button_4x),
         contentDescription = "",
-        modifier = Modifier.fillMaxWidth(.5f)
+        modifier = Modifier
+            .height(48.dp).width(48.dp)
             .clickable {
                 scope.launch {
                     appleAuthProvider.signIn(nonce)
