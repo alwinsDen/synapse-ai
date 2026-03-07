@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -34,13 +35,39 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun UserStartupPage(navController: NavController? = null) {
+    data class ErrorModalState (
+        var state: Boolean,
+        var errorMessage : String
+    )
+
     val vm = viewModel { StartUpLaunchViewModel() }
     val googleLoginViewModel = viewModel { SubmitGoogleLoginViewModel() }
     val scope = rememberCoroutineScope()
     val authProvider = rememberGoogleAuthProvider()
+    val alertDialogState = remember { mutableStateOf(
+        ErrorModalState(
+            state = false,
+            errorMessage = "Something went wrong."
+        )
+    ) }
     val logoutModalState = remember { mutableStateOf(false) }
     val nonce = vm.nonce.collectAsState()
     val googleAuthState = googleLoginViewModel.googleAuthResponse.collectAsState()
+
+    LaunchedEffect(googleAuthState.value){
+        when (val state = googleAuthState.value) {
+            is LoginState.Loading -> {}
+            is LoginState.Success -> {}
+            is LoginState.Error -> {
+                alertDialogState.value = ErrorModalState(
+                    state = true,
+                    errorMessage = state.message
+                )
+            }
+            else -> {}
+        }
+    }
+
     Box(
         modifier = Modifier
             .background(Color(0xffF3DB00))
@@ -56,7 +83,7 @@ fun UserStartupPage(navController: NavController? = null) {
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 IconButton(onClick = {
                     logoutModalState.value = true
                 }) {
@@ -68,10 +95,11 @@ fun UserStartupPage(navController: NavController? = null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(.30f)
-                        .aspectRatio(150f/60f)
+                        .aspectRatio(150f / 60f)
                 ) {
-                    GenericRiveAnimation(modifier = Modifier.fillMaxSize()
-                        .background(color = Color.Transparent),
+                    GenericRiveAnimation(
+                        modifier = Modifier.fillMaxSize()
+                            .background(color = Color.Transparent),
                         riveBackgroundColor = "#F3DB00",
                         animatedFileSource = "toggle"
                     )
@@ -96,11 +124,11 @@ fun UserStartupPage(navController: NavController? = null) {
         Box(Modifier.align(Alignment.Center)) {
             Column(
                 modifier = Modifier
-                    .width(300.dp),
-                verticalArrangement = Arrangement.spacedBy(5.dp)
+                    .width(320.dp),
+                verticalArrangement = Arrangement.spacedBy(0.dp)
             ) {
                 Text(
-                    text = "Synapse ai",
+                    text = "Synapse AI",
                     style = defaultFontStyle(
                         DefaultFontStylesDataClass(
                             fontSize = 53.sp,
@@ -118,17 +146,18 @@ fun UserStartupPage(navController: NavController? = null) {
                     "continue with",
                     style = defaultFontStyle(
                         DefaultFontStylesDataClass(
-                            fontSize = 25.sp,
+                            fontSize = 30.sp,
                             colorInt = 0xff000000,
                             fontFamily = FontLibrary.monserrat()
                         )
                     )
                 )
+                Spacer(Modifier.height(5.dp))
                 Row(
                     modifier = Modifier,
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ){
+                ) {
                     ClickableContinueWithGoogle(nonce.value, handleReceivedGoogleTokenId = { googleTokenId ->
                         googleLoginViewModel.login(googleTokenId, nonce.value)
                     })
@@ -136,21 +165,20 @@ fun UserStartupPage(navController: NavController? = null) {
                 }
             }
         }
-
-        Box(Modifier.padding(10.dp).align(Alignment.BottomCenter)) {
-            when (val state = googleAuthState.value) {
-                is LoginState.Loading -> {}
-                is LoginState.Success -> {}
-                is LoginState.Error -> {
-                    Text(
-                        "Error $state",
-                        modifier = Modifier.background(color = Color(0xff000000)),
-                        color = Color.Red
+        if (alertDialogState.value.state) {
+            AlertDialog(
+                onDismissRequest = {
+                    alertDialogState.value = alertDialogState.value.copy(
+                        state = false
                     )
-                }
-
-                else -> {}
-            }
+                    googleLoginViewModel.resetState()
+                },
+                title = { Text("Network error") },
+                text = { Text(alertDialogState.value.errorMessage)},
+                confirmButton = {
+                   //
+                },
+            )
         }
         Box(
             Modifier.align(Alignment.BottomCenter)

@@ -44,4 +44,8 @@ class SubmitGoogleLoginViewModel: ViewModel() {
             }
         }
     }
+
+    fun resetState(){
+        _response.value = LoginState.Idle
+    }
 }
