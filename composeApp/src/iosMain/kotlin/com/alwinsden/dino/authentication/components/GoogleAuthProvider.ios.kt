@@ -2,35 +2,34 @@ package com.alwinsden.dino.authentication.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import authManager.GoogleAuthenticator
+import com.alwinsden.dino.googleAuthenticatorIos
+import com.alwinsden.dino.swiftBridge.GoogleAuthenticatorIos
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 /**
- * iOS implementation of GoogleAuthProvider using the GoogleSignIn SDK.
+ * iOS implementation of GoogleAuthProvider using the GoogleSignIn SDK via Swift bridge.
  */
-class IOSGoogleAuthProvider(
-    private val authenticator: GoogleAuthenticator
-) : GoogleAuthProvider {
+class IOSGoogleAuthProvider(private val authenticator: GoogleAuthenticatorIos) : GoogleAuthProvider {
 
     override suspend fun signIn(nonce: String): Result<String> {
-        return try {
-            var capturedResult: Result<String> = Result.failure(Exception("Sign-in not completed"))
-
-            val token = authenticator.iosLogin({ loadingState ->
-                // Loading state callback - handled by UI layer
-            }, nonce)
-
-            if (token != null) {
-                Result.success(token)
-            } else {
-                Result.failure(Exception("Sign-in cancelled or failed"))
+        return suspendCancellableCoroutine { continuation ->
+            authenticator.iosLogin(nonce = nonce) { token ->
+                if (token != null) {
+                    continuation.resume(Result.success(token))
+                } else {
+                    continuation.resume(Result.failure(Exception("Sign-in cancelled or failed")))
+                }
             }
-        } catch (e: Exception) {
-            Result.failure(e)
         }
     }
 
     override suspend fun checkExistingCredentials(nonce: String): String? {
-        return authenticator.iosCheckExisting()
+        return suspendCancellableCoroutine { continuation ->
+            authenticator.iosCheckExisting { token ->
+                continuation.resume(token)
+            }
+        }
     }
 
     override suspend fun logoutFromGoogle() {
@@ -40,7 +39,9 @@ class IOSGoogleAuthProvider(
 
 @Composable
 actual fun rememberGoogleAuthProvider(): GoogleAuthProvider {
-    return remember {
-        IOSGoogleAuthProvider(GoogleAuthenticator())
+    val authenticator = checkNotNull(googleAuthenticatorIos) {
+        "GoogleAuthenticatorIos must be set via MainViewController before use"
     }
+    return remember { IOSGoogleAuthProvider(authenticator) }
 }
+

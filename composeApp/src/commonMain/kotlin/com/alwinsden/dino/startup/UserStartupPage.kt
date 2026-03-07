@@ -29,6 +29,7 @@ import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
+import com.alwinsden.dino.utilities.UI.riveUtils.GenericRiveAnimation
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -50,16 +51,36 @@ fun UserStartupPage(navController: NavController? = null) {
             .fillMaxSize(),
     ) {
         Box(
-            Modifier.align(Alignment.TopEnd)
+            Modifier.align(Alignment.TopStart)
+                .fillMaxWidth()
         ) {
-            IconButton(onClick = {
-                logoutModalState.value = true
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Logout,
-                    contentDescription = ""
-                )
+            Row(
+                Modifier.fillMaxWidth()
+                    .padding(10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                IconButton(onClick = {
+                    logoutModalState.value = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = ""
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.30f)
+                        .aspectRatio(150f/60f)
+                ) {
+                    GenericRiveAnimation(modifier = Modifier.fillMaxSize()
+                        .background(color = Color.Transparent),
+                        riveBackgroundColor = "#F3DB00",
+                        animatedFileSource = "toggle"
+                    )
+                }
             }
+
         }
         if (logoutModalState.value) {
             UiConfirmModal("Are you sure you want to log out of Google account?", { confirmState ->
@@ -119,17 +140,24 @@ fun UserStartupPage(navController: NavController? = null) {
                     })
                     Spacer(modifier = Modifier.height(5.dp))
                     ClickableContinueWithApple(nonce.value)
+                    Spacer(Modifier.height(10.dp))
+
                 }
             }
         }
-        Box(Modifier.padding(10.dp)){
-            when( val state = googleAuthState.value){
+
+        Box(Modifier.padding(10.dp).align(Alignment.BottomCenter)) {
+            when (val state = googleAuthState.value) {
                 is LoginState.Loading -> {}
                 is LoginState.Success -> {}
-                is LoginState.Error -> {Text("Error $state",
-                    modifier = Modifier.background(color = Color(0xff000000)),
-                    color = Color.Red
-                )}
+                is LoginState.Error -> {
+                    Text(
+                        "Error $state",
+                        modifier = Modifier.background(color = Color(0xff000000)),
+                        color = Color.Red
+                    )
+                }
+
                 else -> {}
             }
         }
