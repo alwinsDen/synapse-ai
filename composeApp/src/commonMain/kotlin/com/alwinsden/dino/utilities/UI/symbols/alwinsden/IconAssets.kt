@@ -33,7 +33,7 @@ fun AlwinsDenIcon() {
             text = "alwinsden.com",
             style = defaultFontStyle(
                 DefaultFontStylesDataClass(
-                    fontFamily = FontLibrary.ebGaramond(),
+                    fontFamily = FontLibrary.monserrat(),
                     fontSize = 18.sp,
                 )
             ),

@@ -51,7 +51,7 @@ fun HistoryDrawer(
                             style = defaultFontStyle(
                                 DefaultFontStylesDataClass(
                                     fontSize = 28.sp,
-                                    fontFamily = FontLibrary.ebGaramond()
+                                    fontFamily = FontLibrary.monserrat()
                                 )
                             )
                         )
@@ -81,7 +81,7 @@ fun HistoryDrawer(
                                         style = defaultFontStyle(
                                             DefaultFontStylesDataClass(
                                                 colorInt = 0xff4F4F4F,
-                                                fontFamily = FontLibrary.ebGaramond(),
+                                                fontFamily = FontLibrary.monserrat(),
                                                 fontSize = 20.sp
                                             )
                                         ),
@@ -115,7 +115,7 @@ fun HistoryDrawer(
                                     text = "alwintv5018@gmail.com", style =
                                         defaultFontStyle(
                                             DefaultFontStylesDataClass(
-                                                fontFamily = FontLibrary.ebGaramond(),
+                                                fontFamily = FontLibrary.monserrat(),
                                                 fontSize = 20.sp
                                             )
                                         )

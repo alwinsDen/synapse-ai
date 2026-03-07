@@ -42,7 +42,7 @@ fun BotInterface(navController: NavController? = null, mode: String? = null) {
                 text = "*images can be uploaded, but are not saved.",
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass(
-                        fontFamily = FontLibrary.inter(),
+                        fontFamily = FontLibrary.monserrat(),
                         reduceFromDefault = 2
                     )
                 ),

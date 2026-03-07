@@ -105,7 +105,7 @@ fun BotTextField(mode: String? = null) {
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 colorInt = 0xff958282,
-                                fontFamily = FontLibrary.inter()
+                                fontFamily = FontLibrary.monserrat()
                             )
                         ),
                         modifier = Modifier.padding(vertical = 10.dp),

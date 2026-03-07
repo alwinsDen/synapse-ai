@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -28,13 +27,13 @@ fun InitializedUiState() {
             text = buildAnnotatedString {
                 withStyle(
                     SpanStyle(
-                        fontFamily = FontLibrary.ebGaramond(),
+                        fontFamily = FontLibrary.monserrat(),
                         fontSize = 30.sp
                     ),
                 ) {
                     append("Hello Alwin.\n")
                 }
-                withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                withStyle(SpanStyle(fontFamily = FontLibrary.monserrat())) {
                     append("let's begin?")
                 }
             }, fontSize = 40.sp, textAlign = TextAlign.Center
@@ -79,7 +78,7 @@ fun ModelSelectionRadioMenu(
                 text = state.description, style = defaultFontStyle(
                     DefaultFontStylesDataClass(
                         reduceFromDefault = 2,
-                        fontFamily = FontLibrary.ebGaramond()
+                        fontFamily = FontLibrary.monserrat()
                     )
                 )
             )

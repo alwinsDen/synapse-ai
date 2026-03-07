@@ -125,7 +125,7 @@ fun BotChatInterface(navController: NavController? = null) {
                             DefaultFontStylesDataClass(
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Normal,
-                                fontFamily = FontLibrary.ebGaramond()
+                                fontFamily = FontLibrary.monserrat()
                             )
                         ),
                         overflow = TextOverflow.Ellipsis,

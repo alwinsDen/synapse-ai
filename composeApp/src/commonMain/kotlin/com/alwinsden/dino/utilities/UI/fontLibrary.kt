@@ -33,7 +33,7 @@ data class DefaultFontStylesDataClass(
 @Composable
 fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
     return TextStyle(
-        fontFamily = incomingStyles.fontFamily ?: FontLibrary.inter(),
+        fontFamily = incomingStyles.fontFamily ?: FontLibrary.monserrat(),
         fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,
         fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
         fontSize = incomingStyles.fontSize ?: (16 - (incomingStyles.reduceFromDefault ?: 0)).sp,
@@ -48,57 +48,31 @@ EBGaramond Font6
 */
 object FontLibrary {
     @Composable
-    fun ebGaramond(): FontFamily {
+    fun monserrat(): FontFamily {
         return FontFamily(
             Font(
-                resource = Res.font.ebgaramond_regular,
-                FontWeight.Normal,
-                style = FontStyle.Normal
-            ),
-            Font(
-                resource = Res.font.ebgaramond_medium,
-                FontWeight.Medium,
-                FontStyle.Normal
-            ),
-            Font(
-                resource = Res.font.ebgaramond_bold,
-                FontWeight.Bold,
-                FontStyle.Normal
-            ),
-            Font(
-                resource = Res.font.ebgaramond_italic,
-                FontWeight.Normal,
-                FontStyle.Italic
-            )
-        )
-    }
-
-    @Composable
-    fun inter(): FontFamily {
-        return FontFamily(
-            Font(
-                resource = Res.font.inter_18pt_regular,
+                resource = Res.font.montserrat_regular,
                 FontWeight.Normal
             ),
             Font(
-                resource = Res.font.inter_18pt_medium,
+                resource = Res.font.montserrat_medium,
                 FontWeight.Medium
             ),
             Font(
-                resource = Res.font.inter_18pt_italic,
+                resource = Res.font.montserrat_italic,
                 FontWeight.Normal,
                 style = FontStyle.Italic,
             ),
             Font(
-                resource = Res.font.inter_18pt_thin,
+                resource = Res.font.montserrat_thin,
                 FontWeight.Thin,
             ),
             Font(
-                resource = Res.font.inter_18pt_semibold,
+                resource = Res.font.montserrat_semibold,
                 FontWeight.SemiBold,
             ),
             Font(
-                resource = Res.font.inter_18pt_bold,
+                resource = Res.font.montserrat_bold,
                 FontWeight.Bold,
             ),
         )

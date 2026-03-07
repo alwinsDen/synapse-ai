@@ -47,7 +47,7 @@ fun SettingsInterface(navController: NavController? = null) {
                 style = defaultFontStyle(
                     DefaultFontStylesDataClass(
                         fontSize = 28.sp,
-                        fontFamily = FontLibrary.ebGaramond()
+                        fontFamily = FontLibrary.monserrat()
                     )
                 )
             )

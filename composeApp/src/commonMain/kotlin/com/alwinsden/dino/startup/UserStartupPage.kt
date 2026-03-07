@@ -108,12 +108,12 @@ fun UserStartupPage(navController: NavController? = null) {
                         text = buildAnnotatedString {
                             withStyle(
                                 SpanStyle(
-                                    fontFamily = FontLibrary.ebGaramond(),
+                                    fontFamily = FontLibrary.monserrat(),
                                 )
                             ) {
                                 append("synapse ")
                             }
-                            withStyle(SpanStyle(fontFamily = FontLibrary.ebGaramond())) {
+                            withStyle(SpanStyle(fontFamily = FontLibrary.monserrat())) {
                                 append("ai")
                             }
                         },
@@ -127,7 +127,7 @@ fun UserStartupPage(navController: NavController? = null) {
                         DefaultFontStylesDataClass(
                             fontSize = 18.sp,
                             colorInt = 0xff000000,
-                            fontFamily = FontLibrary.ebGaramond()
+                            fontFamily = FontLibrary.monserrat()
                         )
                     )
                 )
