@@ -10,42 +10,74 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/*LOGIN STATE*/
+sealed class ApiState<out T> {
+    object Idle : ApiState<Nothing>()
+    object Loading: ApiState<Nothing>()
+    data class Success<T>(val response: T) : ApiState<T>()
+    data class Error(val message: String) : ApiState<Nothing>()
+}
+
 class StartUpLaunchViewModel : ViewModel() {
-    private val _nonce = MutableStateFlow("")
-    val nonce: StateFlow<String> = _nonce.asStateFlow()
+    private val _nonce = MutableStateFlow<ApiState<String>>(ApiState.Idle)
+    private val _nonceManual = MutableStateFlow<ApiState<String>>(ApiState.Idle)
+    val nonce: StateFlow<ApiState<String>> = _nonce.asStateFlow()
+    val nonceManual: StateFlow<ApiState<String>> = _nonceManual.asStateFlow()
+
+    fun initiateAuto(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _nonce.value = ApiState.Loading
+            try {
+                val apiResponse = RequestManager().createNonce();
+                _nonce.value = ApiState.Success(response = apiResponse)
+            } catch (e  : Exception){
+                _nonce.value = ApiState.Error(e.message ?: "Unknown error occurred.")
+            }
+        }
+    }
+
+    fun initiateManual(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _nonceManual.value = ApiState.Loading
+            try {
+                val apiResponse = RequestManager().createNonce();
+                _nonceManual.value = ApiState.Success(response = apiResponse)
+            } catch (e  : Exception){
+                _nonceManual.value = ApiState.Error(e.message ?: "Unknown error occurred.")
+            }
+        }
+    }
+
+    fun resetStateAuto(){
+        _nonce.value = ApiState.Idle
+    }
+
+    fun resetStateManual(){
+        _nonceManual.value = ApiState.Idle
+    }
 
     init {
-        viewModelScope.launch {
-            _nonce.value = RequestManager().createNonce()
-        }
+        initiateAuto()
     }
 }
 
-/*LOGIN STATE*/
-sealed class LoginState {
-    object Idle : LoginState()
-    object Loading: LoginState()
-    data class Success(val response: LoginResponse) : LoginState()
-    data class Error(val message: String) : LoginState()
-}
-
 class SubmitGoogleLoginViewModel: ViewModel() {
-    private val _response = MutableStateFlow<LoginState>(LoginState.Idle)
-    val googleAuthResponse : StateFlow<LoginState> = _response.asStateFlow()
+    private val _response = MutableStateFlow<ApiState<LoginResponse>>(ApiState.Idle)
+    val googleAuthResponse : StateFlow<ApiState<LoginResponse>> = _response.asStateFlow()
 
     fun login(googleToken: String, nonce: String){
         viewModelScope.launch(Dispatchers.IO){
-            _response.value = LoginState.Loading
+            _response.value = ApiState.Loading
             try {
                 val responseState = RequestManager().googleLogin(googleToken = googleToken, nonce = nonce)
-                _response.value = LoginState.Success(response = responseState)
-            }catch (e: Exception){
-                _response.value = LoginState.Error(e.message ?: "Unknown error occurred.")
+                _response.value = ApiState.Success(response = responseState)
+            } catch (e: Exception){
+                _response.value = ApiState.Error(e.message ?: "Unknown error occurred.")
             }
         }
     }
 
     fun resetState(){
-        _response.value = LoginState.Idle
+        _response.value = ApiState.Idle
     }
 }

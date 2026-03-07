@@ -22,8 +22,7 @@ import androidx.navigation.NavController
 import com.alwinsden.dino.authentication.ClickableContinueWithApple
 import com.alwinsden.dino.authentication.ClickableContinueWithGoogle
 import com.alwinsden.dino.authentication.components.rememberGoogleAuthProvider
-import com.alwinsden.dino.requestManager.LoginState
-import com.alwinsden.dino.requestManager.StartUpLaunchViewModel
+import com.alwinsden.dino.requestManager.ApiState
 import com.alwinsden.dino.requestManager.SubmitGoogleLoginViewModel
 import com.alwinsden.dino.startup.components.UiConfirmModal
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
@@ -35,35 +34,36 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun UserStartupPage(navController: NavController? = null) {
-    data class ErrorModalState (
+    data class ErrorModalState(
         var state: Boolean,
-        var errorMessage : String
+        var errorMessage: String
     )
 
-    val vm = viewModel { StartUpLaunchViewModel() }
     val googleLoginViewModel = viewModel { SubmitGoogleLoginViewModel() }
     val scope = rememberCoroutineScope()
     val authProvider = rememberGoogleAuthProvider()
-    val alertDialogState = remember { mutableStateOf(
-        ErrorModalState(
-            state = false,
-            errorMessage = "Something went wrong."
+    val alertDialogState = remember {
+        mutableStateOf(
+            ErrorModalState(
+                state = false,
+                errorMessage = "Something went wrong."
+            )
         )
-    ) }
+    }
     val logoutModalState = remember { mutableStateOf(false) }
-    val nonce = vm.nonce.collectAsState()
     val googleAuthState = googleLoginViewModel.googleAuthResponse.collectAsState()
 
-    LaunchedEffect(googleAuthState.value){
+    LaunchedEffect(googleAuthState.value) {
         when (val state = googleAuthState.value) {
-            is LoginState.Loading -> {}
-            is LoginState.Success -> {}
-            is LoginState.Error -> {
+            is ApiState.Loading -> {}
+            is ApiState.Success -> {}
+            is ApiState.Error -> {
                 alertDialogState.value = ErrorModalState(
                     state = true,
                     errorMessage = state.message
                 )
             }
+
             else -> {}
         }
     }
@@ -112,7 +112,7 @@ fun UserStartupPage(navController: NavController? = null) {
                 if (confirmState) {
                     scope.launch {
                         authProvider.logoutFromGoogle()
-                    }.apply {
+                    }.invokeOnCompletion {
                         logoutModalState.value = false
                         println("logged out")
                     }
@@ -158,25 +158,25 @@ fun UserStartupPage(navController: NavController? = null) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    ClickableContinueWithGoogle(nonce.value, handleReceivedGoogleTokenId = { googleTokenId ->
-                        googleLoginViewModel.login(googleTokenId, nonce.value)
+                    ClickableContinueWithGoogle(handleReceivedGoogleTokenId = { googleTokenId, nonce ->
+                        googleLoginViewModel.login(googleTokenId, nonce)
                     })
-                    ClickableContinueWithApple(nonce.value)
+                    ClickableContinueWithApple()
                 }
             }
         }
         if (alertDialogState.value.state) {
             AlertDialog(
                 onDismissRequest = {
+                    googleLoginViewModel.resetState()
                     alertDialogState.value = alertDialogState.value.copy(
                         state = false
                     )
-                    googleLoginViewModel.resetState()
                 },
                 title = { Text("Network error") },
-                text = { Text(alertDialogState.value.errorMessage)},
+                text = { Text(alertDialogState.value.errorMessage) },
                 confirmButton = {
-                   //
+                    //
                 },
             )
         }
