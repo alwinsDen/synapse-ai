@@ -2,6 +2,7 @@ package com.alwinsden.dino.startup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Icon
@@ -11,10 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -32,9 +31,7 @@ import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import com.alwinsden.dino.utilities.UI.riveUtils.GenericRiveAnimation
 import com.alwinsden.dino.utilities.UI.symbols.alwinsden.AlwinsDenIcon
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview
 @Composable
 fun UserStartupPage(navController: NavController? = null) {
     val vm = viewModel { StartUpLaunchViewModel() }
@@ -99,39 +96,34 @@ fun UserStartupPage(navController: NavController? = null) {
         Box(Modifier.align(Alignment.Center)) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .width(300.dp),
+                verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                Row(
-                ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                SpanStyle(
-                                    fontFamily = FontLibrary.monserrat(),
-                                )
-                            ) {
-                                append("synapse ")
-                            }
-                            withStyle(SpanStyle(fontFamily = FontLibrary.monserrat())) {
-                                append("ai")
-                            }
-                        },
-                        fontSize = 45.sp,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                Text(
+                    text = "Synapse ai",
+                    style = defaultFontStyle(
+                        DefaultFontStylesDataClass(
+                            fontSize = 53.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    ),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1,
+                    /*this was added cuz we wanted the fontsize to cover the width of container*/
+                    /*this comes from foundation library and is pretty new.*/
+                    autoSize = TextAutoSize.StepBased(maxFontSize = 200.sp),
+                )
                 Text(
                     "continue with",
                     style = defaultFontStyle(
                         DefaultFontStylesDataClass(
-                            fontSize = 18.sp,
+                            fontSize = 25.sp,
                             colorInt = 0xff000000,
                             fontFamily = FontLibrary.monserrat()
                         )
                     )
                 )
-                Spacer(Modifier.height(5.dp))
                 Row(
                     modifier = Modifier,
                     verticalAlignment = Alignment.CenterVertically,

@@ -19,7 +19,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 * NAVIGATION: BotInterface fot the main
 * Bot interaction page.
 * */
-@Preview(showBackground = true)
 @Composable
 fun BotInterface(navController: NavController? = null, mode: String? = null) {
     if ((mode === null || mode == PageDefaults.botTextDefault)) {
