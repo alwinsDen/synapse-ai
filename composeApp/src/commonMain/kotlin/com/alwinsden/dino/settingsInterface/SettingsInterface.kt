@@ -16,8 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -31,7 +32,7 @@ fun SettingsInterface(navController: NavController? = null) {
         rememberTextFieldState("")
     Column(
         Modifier
-            .background(color = Color(0xffffffff))
+            .background(color = Color(0xff000000))
             .statusBarsPadding()
             .navigationBarsPadding()
             .fillMaxSize()
@@ -41,7 +42,7 @@ fun SettingsInterface(navController: NavController? = null) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Icon(Icons.Default.Settings, contentDescription = "User settings")
+            Icon(Icons.Default.Settings, contentDescription = "User settings", tint = Color.White)
             Text(
                 text = "Settings",
                 style = defaultFontStyle(
@@ -57,7 +58,9 @@ fun SettingsInterface(navController: NavController? = null) {
                     navController?.popBackStack()
                 }
             ) {
-                Icon(imageVector = Icons.Default.Close, contentDescription = "close settings")
+                Icon(imageVector = Icons.Default.Close, contentDescription = "close settings",
+                    tint = Color.White
+                )
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
@@ -71,20 +74,21 @@ fun SettingsInterface(navController: NavController? = null) {
             BasicTextField(
                 state = claudeToken,
                 textStyle = defaultFontStyle(
-                    DefaultFontStylesDataClass(
-                        fontWeight = FontWeight.Thin,
-                        colorInt = 0xff858585
-                    )
+                    DefaultFontStylesDataClass()
                 ),
+                cursorBrush = SolidColor(Color.White),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
                     .height(40.dp)
+                    .background(color = Color.DarkGray)
                     .border(
                         width = 1.dp, shape = RoundedCornerShape(
                             10.dp
-                        ), color = Color(0xff9c9c9c)
+                        ), color = Color(0xff666666)
                     )
-                    .padding(10.dp),
+                    .padding(10.dp)
+                ,
                 lineLimits = TextFieldLineLimits.SingleLine,
             )
         }
@@ -93,7 +97,6 @@ fun SettingsInterface(navController: NavController? = null) {
             "*Claude token is stored locally. Will reset on clearing cache or app deletion.",
             style = defaultFontStyle(
                 DefaultFontStylesDataClass(
-                    colorInt = 0xff9c9c9c,
                     reduceFromDefault = 2
                 )
             )
