@@ -1,6 +1,7 @@
 package com.alwinsden.dino.botChatInterface
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -171,6 +172,11 @@ fun BotChatInterface(navController: NavController? = null) {
                     Column(
                         modifier = Modifier.fillMaxWidth(0.9f)
                             .clip(RoundedCornerShape(20.dp))
+                            .border(
+                                width = 1.dp,
+                                shape = RoundedCornerShape(20.dp),
+                                color = Color(0xff666666)
+                            )
                             .background(Color.DarkGray)
                             .padding(5.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,

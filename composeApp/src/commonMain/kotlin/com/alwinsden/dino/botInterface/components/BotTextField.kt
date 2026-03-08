@@ -110,7 +110,7 @@ fun BotTextField(mode: String? = null) {
     ) {
         ElevatedButton(
             modifier = Modifier
-                .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(50.dp))
+                .border(width = 1.dp, color = Color(0xff666666), shape = RoundedCornerShape(50.dp))
                 .height(50.dp),
             onClick = {
                 controlBottomSheetStatus.value = true
