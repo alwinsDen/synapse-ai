@@ -34,7 +34,7 @@ fun HistoryDrawer(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .fillMaxHeight(),
-                drawerContainerColor = Color(0xffffffff),
+                drawerContainerColor = Color.DarkGray,
             ) {
                 Column(
                     modifier = Modifier
@@ -50,7 +50,7 @@ fun HistoryDrawer(
                             text = "Past conversations",
                             style = defaultFontStyle(
                                 DefaultFontStylesDataClass(
-                                    fontSize = 28.sp,
+                                    fontSize = 24.sp,
                                     fontFamily = FontLibrary.monserrat()
                                 )
                             )
@@ -61,7 +61,7 @@ fun HistoryDrawer(
                         Modifier.height(1.dp)
                             .fillMaxWidth(.9f)
                             .border(
-                                color = Color(0xff000000),
+                                color = Color(0xffffffff),
                                 width = 2.dp
                             )
                     )
@@ -80,9 +80,9 @@ fun HistoryDrawer(
                                         modifier = Modifier.weight(1f, fill = false),
                                         style = defaultFontStyle(
                                             DefaultFontStylesDataClass(
-                                                colorInt = 0xff4F4F4F,
+                                                colorInt = 0xfff0f0f0,
                                                 fontFamily = FontLibrary.monserrat(),
-                                                fontSize = 20.sp
+                                                fontSize = 16.sp
                                             )
                                         ),
                                         maxLines = 1,
@@ -116,7 +116,6 @@ fun HistoryDrawer(
                                         defaultFontStyle(
                                             DefaultFontStylesDataClass(
                                                 fontFamily = FontLibrary.monserrat(),
-                                                fontSize = 20.sp
                                             )
                                         )
                                 )
@@ -124,7 +123,7 @@ fun HistoryDrawer(
                             IconButton(onClick = {
                                 navigationController?.navigate(SettingsNavigation)
                             }) {
-                                Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
+                                Icon(imageVector = Icons.Filled.Settings, contentDescription = null, tint = Color.White)
                             }
                         }
                     }

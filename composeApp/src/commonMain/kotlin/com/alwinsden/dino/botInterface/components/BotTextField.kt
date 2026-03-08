@@ -21,12 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
-import com.alwinsden.dino.utilities.UI.FontLibrary
-import com.alwinsden.dino.utilities.UI.PageDefaults
-import com.alwinsden.dino.utilities.UI.defaultFontStyle
-import com.alwinsden.dino.utilities.UI.listModelDefinitions
+import com.alwinsden.dino.utilities.UI.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -63,117 +61,121 @@ fun BotTextField(mode: String? = null) {
     val routineScope = rememberCoroutineScope()
     val controlBottomSheetStatus = remember { mutableStateOf<Boolean>(false) }
     val defaultModelSelection = remember { mutableStateOf<String>(ModelDefinitions.CLAUDE.name) }
-    if ((mode === null || mode == PageDefaults.botTextDefault)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .clip(shape = RoundedCornerShape(10.dp))
-                .border(shape = RoundedCornerShape(10.dp), color = Color.Transparent, width = 1.dp)
-                .background(color = Color(0xffF2F2F2)),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.SpaceBetween
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(if (mode=== PageDefaults.botTextExtend) 1f else 0.9f)
+            .clip(shape = RoundedCornerShape(10.dp))
+            .border(shape = RoundedCornerShape(10.dp), color = Color.Transparent, width = 1.dp)
+            .background(color = Color.DarkGray),
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Box(
+            modifier = Modifier.weight(1f)
+                .align(Alignment.CenterVertically)
+                .weight(1f)
+                .padding(horizontal = 10.dp)
         ) {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Image,
-                    contentDescription = "Attach images",
-                    tint = Color(0xff828282)
-                )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Box(
-                modifier = Modifier.weight(1f)
-                    .align(Alignment.CenterVertically)
-                    .weight(1f)
-            ) {
-                BasicTextField(
-                    state = defaultTextFieldValue,
-                    textStyle = defaultFontStyle(
+            BasicTextField(
+                state = defaultTextFieldValue,
+                textStyle = defaultFontStyle(
+                    DefaultFontStylesDataClass(
+                        colorInt = 0xffffffff,
+                    )
+                ),
+                cursorBrush = SolidColor(Color.White),
+                modifier = Modifier
+                    .heightIn(max = 200.dp)
+                    .verticalScroll(textFieldScrollState)
+                    .padding(vertical = 10.dp)
+                    .fillMaxWidth()
+            )
+            if (defaultTextFieldValue.text.toString().isEmpty()) {
+                Text(
+                    text = defaultFieldText,
+                    color = Color.LightGray,
+                    style = defaultFontStyle(
                         DefaultFontStylesDataClass(
-                            colorInt = 0xff000000,
+                            fontFamily = FontLibrary.monserrat()
                         )
                     ),
-                    modifier = Modifier
-                        .heightIn(max = 200.dp)
-                        .verticalScroll(textFieldScrollState)
-                        .padding(vertical = 10.dp)
-                        .fillMaxWidth()
-                )
-                if (defaultTextFieldValue.text.toString().isEmpty()) {
-                    Text(
-                        text = defaultFieldText,
-                        style = defaultFontStyle(
-                            DefaultFontStylesDataClass(
-                                colorInt = 0xff958282,
-                                fontFamily = FontLibrary.monserrat()
-                            )
-                        ),
-                        modifier = Modifier.padding(vertical = 10.dp),
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Send,
-                    contentDescription = "Send query",
-                    tint = Color(if (defaultTextFieldValue.text.isBlank()) 0xff888888 else 0xff23D76E)
+                    modifier = Modifier.padding(vertical = 10.dp),
                 )
             }
         }
-        Spacer(Modifier.height(3.dp))
-        Box(
-            Modifier.fillMaxWidth(.9f)
+    }
+    Row(
+        Modifier.fillMaxWidth()
+            .padding(horizontal = 5.dp, vertical = 5.dp)
+    ) {
+        ElevatedButton(
+            modifier = Modifier
+                .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(50.dp))
+                .height(50.dp),
+            onClick = {
+                controlBottomSheetStatus.value = true
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.DarkGray,
+                contentColor = Color.Black
+            )
         ) {
-            ElevatedButton(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                onClick = {
-                    controlBottomSheetStatus.value = true
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xffF2F2F2),
-                    contentColor = Color.Black
-                )
-            ) {
-                Text(
-                    text = defaultModelSelection.value
-                        .lowercase()
-                        .replaceFirstChar { it.uppercase() },
-                    style = defaultFontStyle(
-                        DefaultFontStylesDataClass()
+            Text(
+                text = defaultModelSelection.value
+                    .lowercase()
+                    .replaceFirstChar { it.uppercase() },
+                style = defaultFontStyle(
+                    DefaultFontStylesDataClass(
+                        fontWeight = FontWeight.SemiBold
                     )
-                )
-            }
+                ),
+            )
         }
-        if (controlBottomSheetStatus.value) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    routineScope.launch {
-                        if (sheetState.isVisible)
-                            sheetState.hide()
-                    }.invokeOnCompletion { controlBottomSheetStatus.value = false }
-                },
-                sheetState = sheetState
+        Spacer(Modifier.weight(1f))
+        IconButton(onClick = {}) {
+            Icon(
+                imageVector = Icons.Default.Image,
+                contentDescription = "Attach images",
+                tint = Color.White,
+            )
+        }
+        IconButton(onClick = {}) {
+            Icon(
+                imageVector = Icons.Default.Send,
+                contentDescription = "Send query",
+                tint = Color(if (defaultTextFieldValue.text.isBlank()) 0xff888888 else 0xffffffff)
+            )
+        }
+    }
+    if (controlBottomSheetStatus.value) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                routineScope.launch {
+                    if (sheetState.isVisible)
+                        sheetState.hide()
+                }.invokeOnCompletion { controlBottomSheetStatus.value = false }
+            },
+            sheetState = sheetState,
+            containerColor = Color.DarkGray,
+        ) {
+            Column(
+                //this is necessary for screen readers.
+                modifier = Modifier.selectableGroup()
             ) {
-                Column(
-                    //this is necessary for screen readers.
-                    modifier = Modifier.selectableGroup()
-                ) {
-                    listModelDefinitions.forEach { state ->
-                        ModelSelectionRadioMenu(
-                            state = state,
-                            onClick = { incomingNewType ->
-                                defaultModelSelection.value = incomingNewType
-                                routineScope.launch {
-                                    delay(200)
-                                    sheetState.hide()
-                                }.invokeOnCompletion {
-                                    controlBottomSheetStatus.value = false
-                                }
-                            },
-                            currentSelection = defaultModelSelection.value
-                        )
-                    }
+                listModelDefinitions.forEach { state ->
+                    ModelSelectionRadioMenu(
+                        state = state,
+                        onClick = { incomingNewType ->
+                            defaultModelSelection.value = incomingNewType
+                            routineScope.launch {
+                                delay(200)
+                                sheetState.hide()
+                            }.invokeOnCompletion {
+                                controlBottomSheetStatus.value = false
+                            }
+                        },
+                        currentSelection = defaultModelSelection.value
+                    )
                 }
             }
         }

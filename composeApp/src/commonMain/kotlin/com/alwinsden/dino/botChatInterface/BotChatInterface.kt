@@ -15,13 +15,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,6 +29,7 @@ import com.alwinsden.dino.botInterface.components.BotTextField
 import com.alwinsden.dino.historyDrawer.HistoryDrawer
 import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
+import com.alwinsden.dino.utilities.UI.PageDefaults
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import kotlinx.coroutines.launch
 
@@ -83,13 +81,14 @@ fun BotChatInterface(navController: NavController? = null) {
         innerContent = {
             BoxWithConstraints(
                 modifier = Modifier
+                    .background(color = Color(0xff000000))
                     .statusBarsPadding()
                     .fillMaxSize()
-                    .background(color = Color(0xffffffff))
             ) {
                 val mxWidth = maxWidth * .7f
                 Column(
-                    Modifier.verticalScroll(state = verticalScrollState)
+                    Modifier.verticalScroll(state = verticalScrollState),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(Modifier.height(60.dp))
                     UserCreatedField(maxWidth = mxWidth)
@@ -99,7 +98,7 @@ fun BotChatInterface(navController: NavController? = null) {
                         style = defaultFontStyle(
                             DefaultFontStylesDataClass(
                                 colorInt = 0xff999999,
-                                reduceFromDefault = 4
+                                reduceFromDefault = 2
                             )
                         ),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -113,7 +112,7 @@ fun BotChatInterface(navController: NavController? = null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
-                        .background(color = Color(0xffffffff))
+                        .background(color = Color(0xff000000))
                         .padding(start = 10.dp)
                 ) {
                     Text(
@@ -135,10 +134,18 @@ fun BotChatInterface(navController: NavController? = null) {
                         horizontalArrangement = Arrangement.End,
                     ) {
                         IconButton(onClick = { }) {
-                            Icon(imageVector = Icons.Default.EditNote, contentDescription = "Start New chat")
+                            Icon(
+                                imageVector = Icons.Default.EditNote,
+                                tint = Color.White,
+                                contentDescription = "Start New chat"
+                            )
                         }
                         IconButton(onClick = { }) {
-                            Icon(imageVector = Icons.Default.PowerSettingsNew, contentDescription = "Logout app")
+                            Icon(
+                                imageVector = Icons.Default.PowerSettingsNew,
+                                tint = Color.White,
+                                contentDescription = "Logout app"
+                            )
                         }
                         IconButton(onClick = {
                             coroutineScope.launch() {
@@ -147,29 +154,33 @@ fun BotChatInterface(navController: NavController? = null) {
                                 }
                             }
                         }) {
-                            Icon(imageVector = Icons.Default.History, contentDescription = "History of conversations")
+                            Icon(
+                                imageVector = Icons.Default.History,
+                                tint = Color.White,
+                                contentDescription = "History of conversations"
+                            )
                         }
                     }
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .dropShadow(
-                            shape = RoundedCornerShape(20.dp),
-                            shadow = Shadow(
-                                radius = 5.dp,
-                                spread = 5.dp,
-                                color = Color(0xfff0f0f0),
-                                offset = DpOffset(x = 0.dp, (3).dp)
-                            )
-                        )
-                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                        .background(Color(0xffffffff))
-                        .padding(top = 15.dp)
-                        .navigationBarsPadding(),
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    BotTextField()
+                    Column(
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.DarkGray)
+                            .padding(5.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        BotTextField(mode = PageDefaults.botTextExtend)
+                    }
+                    Spacer(Modifier
+                    .navigationBarsPadding()
+//                    .height(15.dp)
+                    )
                 }
             }
         },

@@ -14,7 +14,7 @@ import com.alwinsden.dino.utilities.UI.DefaultFontStylesDataClass
 import com.alwinsden.dino.utilities.UI.FontLibrary
 import com.alwinsden.dino.utilities.UI.defaultFontStyle
 import dino.composeapp.generated.resources.Res
-import dino.composeapp.generated.resources.ic_alwinsden_black_rec
+import dino.composeapp.generated.resources.ic_alwisnden_yellow_rec
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -24,7 +24,7 @@ fun AlwinsDenIcon() {
     ) {
         Image(
             painter = painterResource(
-                resource = Res.drawable.ic_alwinsden_black_rec
+                resource = Res.drawable.ic_alwisnden_yellow_rec
             ),
             contentDescription = "AlwinsDen logo",
             Modifier.width(40.dp)

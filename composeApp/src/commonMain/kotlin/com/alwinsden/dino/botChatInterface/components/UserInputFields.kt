@@ -19,8 +19,7 @@ import com.alwinsden.dino.utilities.UI.defaultFontStyle
 @Composable
 fun UserCreatedField(maxWidth: Dp) {
     Row(
-        modifier = Modifier.fillMaxWidth()
-            .padding(end = 10.dp),
+        modifier = Modifier.fillMaxWidth(.9f),
         horizontalArrangement = Arrangement.End
     ) {
         Column(
@@ -41,7 +40,7 @@ fun UserCreatedField(maxWidth: Dp) {
                             bottomEnd = 15.dp
                         )
                     )
-                    .background(color = Color(0xffF2F2F2))
+                    .background(color = Color.DarkGray)
                     .padding(8.dp)
 
             )
