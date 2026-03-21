@@ -37,7 +37,7 @@ fun defaultFontStyle(incomingStyles: DefaultFontStylesDataClass): TextStyle {
         fontWeight = incomingStyles.fontWeight ?: FontWeight.Normal,
         fontStyle = incomingStyles.fontStyle ?: FontStyle.Normal,
         fontSize = incomingStyles.fontSize ?: (16 - (incomingStyles.reduceFromDefault ?: 0)).sp,
-        color = Color(incomingStyles.colorInt ?: 0xff000000),
+        color = Color(incomingStyles.colorInt ?: 0xffffffff),
         lineHeight = incomingStyles.lineHeight ?: TextUnit.Unspecified,
     )
 }

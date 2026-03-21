@@ -70,7 +70,7 @@ fun UserStartupPage(navController: NavController? = null) {
 
     Box(
         modifier = Modifier
-            .background(Color(0xffF3DB00))
+            .background(Color(0xff000000))
             .statusBarsPadding()
             .fillMaxSize(),
     ) {
@@ -89,7 +89,8 @@ fun UserStartupPage(navController: NavController? = null) {
                 }) {
                     Icon(
                         imageVector = Icons.Default.Logout,
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = Color(0xffFFFFFF)
                     )
                 }
                 Box(
@@ -100,7 +101,7 @@ fun UserStartupPage(navController: NavController? = null) {
                     GenericRiveAnimation(
                         modifier = Modifier.fillMaxSize()
                             .background(color = Color.Transparent),
-                        riveBackgroundColor = "#F3DB00",
+                        riveBackgroundColor = "#000000",
                         animatedFileSource = "toggle"
                     )
                 }
@@ -147,7 +148,6 @@ fun UserStartupPage(navController: NavController? = null) {
                     style = defaultFontStyle(
                         DefaultFontStylesDataClass(
                             fontSize = 30.sp,
-                            colorInt = 0xff000000,
                             fontFamily = FontLibrary.monserrat()
                         )
                     )

@@ -1,15 +1,19 @@
 package com.alwinsden.dino.botInterface.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -28,12 +32,15 @@ fun InitializedUiState() {
                 withStyle(
                     SpanStyle(
                         fontFamily = FontLibrary.monserrat(),
-                        fontSize = 30.sp
+                        fontSize = 30.sp,
+                        color = Color.White
                     ),
                 ) {
                     append("Hello Alwin.\n")
                 }
-                withStyle(SpanStyle(fontFamily = FontLibrary.monserrat())) {
+                withStyle(SpanStyle(fontFamily = FontLibrary.monserrat(),
+                        color = Color.White
+                )) {
                     append("let's begin?")
                 }
             }, fontSize = 40.sp, textAlign = TextAlign.Center
@@ -64,6 +71,7 @@ fun ModelSelectionRadioMenu(
                 }
             )
             .fillMaxWidth()
+            .background(Color.DarkGray)
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -71,7 +79,9 @@ fun ModelSelectionRadioMenu(
         Column() {
             Text(
                 text = state.name, style = defaultFontStyle(
-                    DefaultFontStylesDataClass()
+                    DefaultFontStylesDataClass(
+                        fontWeight = FontWeight.SemiBold
+                    )
                 )
             )
             Text(
@@ -86,7 +96,8 @@ fun ModelSelectionRadioMenu(
         RadioButton(
             selected = (state.incomingType == currentSelection),
             //it's recommended to keep this null and let .selectable handle onclick for better accessibility
-            onClick = null
+            onClick = null,
+            colors = RadioButtonDefaults.colors(Color.White, unselectedColor = Color.White),
         )
     }
 
